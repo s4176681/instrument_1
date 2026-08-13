@@ -1,0 +1,36 @@
+/*got a font of google fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+/*custom variables*/
+:root {
+    --colour-01: black;
+    --colour-02: white;
+    --colour-03: rgba(108, 108, 108, 0.667);
+    --colour-04: lightgrey;
+
+}
+
+/*Dark mode*/
+@media (prefers-color-scheme: dark) {
+    :root {
+        --colour-01: rgb(61, 61, 61);
+        --colour-02: black;
+        --colour-03: darkgrey;
+        --colour-04: lightgrey;
+    }
+}
+
+button { /*red colour buttons*/
+    color: rgb(44, 189, 12);
+    border-radius: 6px;
+    font-weight: 800;
+    border-color: rgba(47, 255, 0, 0.729);
+}
+
+/*default styling for site*/
+body {
+    font-family: "Roboto Mono";
+    background-color: var(--colour-03);
+    color: var(--colour-01);
+}
+
