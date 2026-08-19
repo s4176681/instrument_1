@@ -25,6 +25,13 @@ button { /*red colour buttons*/
     border-radius: 6px;
     font-weight: 800;
     border-color: rgba(47, 255, 0, 0.729);
+    
+    
+}
+
+dialog {
+    /*align-items: center;*/
+    text-align: center;
 }
 
 /*default styling for site*/
