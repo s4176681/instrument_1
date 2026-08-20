@@ -10,23 +10,67 @@
 
 }
 
-/*Dark mode*/
-@media (prefers-color-scheme: dark) {
-    :root {
-        --colour-01: rgb(61, 61, 61);
-        --colour-02: black;
-        --colour-03: darkgrey;
-        --colour-04: lightgrey;
-    }
+/*default styling for site*/
+/*Making the site 'fixed', so that it isn't disorganised.*/
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /*STOPS SCROLL BAR FROM APPEARING*/
 }
 
-button { /*red colour buttons*/
+body {
+    font-family: "Roboto Mono";
+    background-color: var(--colour-03);
+    color: var(--colour-01);
+    padding: 10px;
+
+    position: fixed;
+    inset: 0; /*pins all edges to the viewport.*/
+}
+
+
+/*ELEMENT PLACEMENT*/
+header{
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+
+    position: fixed;
+}
+
+main{
+    /*
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /*Keeps these centred.*/
+    
+    position: fixed;
+}
+
+.playPause {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /*Keeps these centred.*/
+
+    position: fixed;
+}
+
+#test-button {
     color: rgb(44, 189, 12);
     border-radius: 6px;
     font-weight: 800;
     border-color: rgba(47, 255, 0, 0.729);
-    
-    
+
+    top: 150px;
+    position: fixed;
+}
+
+#key-test {
+    left: 200px;
+
+    top: 150px;
+    position: fixed;
 }
 
 dialog {
@@ -34,11 +78,4 @@ dialog {
     text-align: center;
 }
 
-/*default styling for site*/
-body {
-    font-family: "Roboto Mono";
-    background-color: var(--colour-03);
-    color: var(--colour-01);
-    padding: 10px;
-}
 
