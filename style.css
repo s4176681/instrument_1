@@ -39,5 +39,6 @@ body {
     font-family: "Roboto Mono";
     background-color: var(--colour-03);
     color: var(--colour-01);
+    padding: 10px;
 }
 
