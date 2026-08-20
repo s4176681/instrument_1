@@ -13,12 +13,15 @@ const okButton = document.getElementById("intro-modal-close");
 // mouse button hold?
 let mouseButtonDown = false;
 // mouse being held variable
-window.addEventListener("mousedown", function(){ //new
+window.addEventListener("mousedown", function(){ //
     mouseButtonDown = true;
 });
-window.addEventListener("mouseup", function(){ //new
+window.addEventListener("mouseup", function(){ 
     mouseButtonDown = false;
 });
+
+
+
 
 
 //MODAL
@@ -41,6 +44,9 @@ introModal.addEventListener("close", toneInit);
 const synth = new Tone.PolySynth();
 
 function toneInit(){
+    Tone.start().then(function(){
+        console.log("audio is ready");
+    }); 
     // connect synth
     synth.connect(Tone.Destination);
 }
@@ -57,7 +63,7 @@ function playNote(e){
     console.log(note);
     // play the note for the right amount of time
     // if mouse button is held previously play note
-    if(mouseButtonDown === true){
+    if(e.button === 1){
         synth.triggerAttack(note);
     }
 }

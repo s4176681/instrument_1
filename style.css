@@ -62,13 +62,15 @@ main{
     font-weight: 800;
     border-color: rgba(47, 255, 0, 0.729);
 
+    left: 80px;
     top: 150px;
     position: fixed;
 }
 
 #key-test {
-    left: 200px;
+    /**/
 
+    left: 200px;
     top: 150px;
     position: fixed;
 }
