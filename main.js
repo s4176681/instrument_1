@@ -63,7 +63,7 @@ function playNote(e){
     console.log(note);
     // play the note for the right amount of time
     // if mouse button is held previously play note
-    if(e.button === 1){
+    if(e.buttons === 1){ //// WORKS FOR OUR BROWSER, awkwardly optimised.
         synth.triggerAttack(note);
     }
 }
