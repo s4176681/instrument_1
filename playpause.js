@@ -1,10 +1,10 @@
 const playPauseButton = document.querySelector(".playPauseButton");
-const playPauseIcon = plaPauseButton.querySelector("img");
+const playPauseIcon = playPauseButton.querySelector("img");
 
 let isPlaying = false;
 
-const playIconSrc = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
-const pauseIconSrc = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
+const playIconSrc = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
+const pauseIconSrc = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
 // defining images
 
 playPauseButton.addEventListener("click", function(){
