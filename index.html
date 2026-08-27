@@ -14,7 +14,11 @@
     <!--For the sounds-->
     <script src="main.js" defer></script>
     <!--For the playbutton-->
+
+    <!--
     <script src="playpause.js" defer></script>
+    -->
+    
 </head>
 <body>
     <dialog id="intro-modal">
@@ -46,9 +50,27 @@
                 />
             </button>
         </div>
-            
-
         
+        <!--This is for a slider-->
+        <div id="volume">
+            <label for="volume">Volume</label>
+            <input type="range" min="0" max="100" value="50">
+        </div>
+
+
+
+
+
+
+
+        <!--NEW-->
+        <audio id="audio-track" src="./audio/p-hase_Leapt.mp3"></audio>
+        <!--Controls-->
+        <button id="playback-button">play</button>
+        <!--Random location button-->
+        <button id="random-location">random</button>
+        
+
     </main>
 
 </body>

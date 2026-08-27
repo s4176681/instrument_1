@@ -50,7 +50,7 @@ main{
 
 .playPauseButton {
     top: 50%;
-    left: 50%;
+    left: 400px;
     transform: translate(-50%, -50%); /*Keeps these centred.*/
 
     position: fixed;
@@ -74,6 +74,19 @@ main{
     top: 150px;
     position: fixed;
 }
+
+#volume {
+    /**/
+
+    top: 50%;
+    left: 100px;
+    position: fixed;
+}
+
+
+
+
+
 
 dialog {
     /*align-items: center;*/
