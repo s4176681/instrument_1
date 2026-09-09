@@ -1,9 +1,9 @@
 
 //document.body.style.backgroundColor = "red";
 // get button
-const testButton = document.getElementById("test-button");
+//const testButton = document.getElementById("test-button");
 //
-const key = document.getElementById("key-test")
+//const key = document.getElementById("key-test")
 //MODAL
 //find intro modal
 const introModal = document.getElementById("intro-modal");
@@ -38,7 +38,7 @@ introModal.addEventListener("close", toneInit);
 
 
 
-//TONE
+//TONE + usage
 // create instrument and connect to audio
 // html -> js -> open modal -> ok -> modal closes -> audio init
 const synth = new Tone.PolySynth();
@@ -79,14 +79,13 @@ function endNote(e) {
     synth.triggerRelease(note);
 }
 
-testButton.addEventListener("mousedown", playNote);
-testButton.addEventListener("mouseenter", playNote);
-testButton.addEventListener("mouseup", endNote);
-testButton.addEventListener("mouseleave", endNote);
-
-key.addEventListener("mousedown", playNote);
-key.addEventListener("mouseenter", playNote);
-key.addEventListener("mouseup", endNote);
-key.addEventListener("mouseleave", endNote);
+const allKeys = document.querySelectorAll(".whiteKey");
 
 
+allKeys.forEach(function(keyButton){ //claude helped here to better understand how wiring all the buttons together work.
+    // forEach only exists on array like collections. Thats why there was an issue her before.
+    keyButton.addEventListener("mousedown", playNote);
+    keyButton.addEventListener("mouseenter", playNote);
+    keyButton.addEventListener("mouseup", endNote);
+    keyButton.addEventListener("mouseleave", endNote);
+})

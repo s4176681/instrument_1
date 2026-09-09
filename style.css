@@ -5,7 +5,7 @@
 :root {
     --colour-01: black;
     --colour-02: white;
-    --colour-03: rgba(108, 108, 108, 0.667);
+    --colour-03: rgba(14, 35, 75, 0.667);
     --colour-04: lightgrey;
 
 }
@@ -24,7 +24,6 @@ body {
     color: var(--colour-01);
     padding: 10px;
 
-    position: fixed;
     inset: 0; /*pins all edges to the viewport.*/
 }
 
@@ -36,43 +35,49 @@ header{
     width: 100%;
     padding: 20px;
 
-    position: fixed;
 }
 
 main{
     /*
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /*Keeps these centred.*/
-    
-    position: fixed;
+    transform: translate(-50%, -50%); /*Keeps these centred.*/  
+    padding: 1px;
 }
 
 .playPauseButton {
-    top: 50%;
-    left: 400px;
-    transform: translate(-50%, -50%); /*Keeps these centred.*/
-
-    position: fixed;
+    padding: 1%;
 }
 
 #test-button {
+    /*not in function*/
+    
     color: rgb(44, 189, 12);
     border-radius: 6px;
     font-weight: 800;
     border-color: rgba(47, 255, 0, 0.729);
 
-    left: 80px;
-    top: 150px;
-    position: fixed;
 }
 
-#key-test {
-    /**/
+.whiteKey {
+    width: 50px;
+    height: 180px;
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 0 0 6px 6px;
+    font-weight: bold;
+    font-size: 1rem;
+}
 
-    left: 200px;
-    top: 150px;
-    position: fixed;
+.whiteKey:active {
+    background-color: #eee;
+}
+
+.keysRow {
+    display: flex;
+    gap: 2px;
+    
 }
 
 .SLIDERS {
@@ -80,14 +85,7 @@ main{
 
     align-items: flex-end;
 
-    top: 50%;
-    left: 100px;
-    position: fixed;
 }
-
-
-
-
 
 
 dialog {
