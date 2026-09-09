@@ -26,24 +26,46 @@
         <button id="intro-modal-close">ok</button>
     </dialog>
 
-    <header>
+    <header class="top-bar">
         <h1>Audio Instrument</h1>
+        <div class="divider"></div>
+        <div class="SLIDERS">
+            <!--This is for a slider-->
+            <div id="volume">
+                <label for="volume">Volume</label>
+                <input type="range" min="0" max="100" value="50">             
+            </div>
+            <div>
+                <label for="mixer">mixer</label>
+                <input type="range" min="0" max="100" value="50">
+            </div>
+            <div>
+                <label for="EQ">EQ</label>
+                <input type="range" min="0" max="100" value="50">
+            </div>
+        </div>
     </header>
 
     <main> <!--creating a simple 7 note selection-->
         <!--KEYS-->
-        <div class="keysRow"> <!--Change the notes for a different key/sound-->
-            <button class="whiteKey" data-note="C4">C</button>
-            <button class="whiteKey" data-note="D4">D</button>
-            <button class="whiteKey" data-note="E4">E</button>
-            <button class="whiteKey" data-note="F4">F</button>
-            <button class="whiteKey" data-note="G4">G</button>
-            <button class="whiteKey" data-note="A4">A</button>
-            <button class="whiteKey" data-note="B4">B</button>
+        <div class="instrument-area">
+            <div class="keysRow"> <!--Change the notes for a different key/sound-->
+                <button class="whiteKey" data-note="C4">C</button>
+                <button class="whiteKey" data-note="D4">D</button>
+                <button class="whiteKey" data-note="E4">E</button>
+                <button class="whiteKey" data-note="F4">F</button>
+                <button class="whiteKey" data-note="G4">G</button>
+                <button class="whiteKey" data-note="A4">A</button>
+                <button class="whiteKey" data-note="B4">B</button>
+                <button class="whiteKey" data-note="C5">C</button>
+            </div>
+
+            <canvas id="visualiser" width="600" height="200"></canvas>
 
         </div>
 
 
+    </main>
 
         <div class="playPauseButton">
             <button>
@@ -55,34 +77,9 @@
                 />
             </button>
         </div>
-        
-        <div class="SLIDERS">
-            <!--This is for a slider-->
-            <div id="volume">
-                <label for="volume">Volume</label>
-                <input type="range" min="0" max="100" value="50">
-                
-            </div>
 
-            <div>
-                <label for="mixer">mixer</label>
-                <input type="range" min="0" max="100" value="50">
-            </div>
+        <!--More controls to be added-->
 
-            <div>
-                <label for="EQ">EQ</label>
-                <input type="range" min="0" max="100" value="50">
-            </div>
-
-        </div>
-
-            <!--More controls to be added-->
-
-
-
-
-
-    </main>
 
 </body>
 </html>

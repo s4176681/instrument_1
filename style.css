@@ -33,7 +33,22 @@ header{
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px;
+    padding: 5px;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    /*justify-content: 1rem 2rem;*/
+    justify-content: space-between;
+    background-color: var(--colour-02);
+    
+}
+
+.divider {
+    width: 1px;
+    background-color: var(--colour-04);
+    align-self: stretch; /*same height as others the div is in*/
 
 }
 
@@ -42,7 +57,7 @@ main{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); /*Keeps these centred.*/  
-    padding: 1px;
+    padding: 0px;
 }
 
 .playPauseButton {
@@ -59,9 +74,14 @@ main{
 
 }
 
+#visualiser { /*test for now*/
+    background-color: #ffffff76;
+    flex: 1; /*fills*/
+}
+
 .whiteKey {
-    width: 50px;
-    height: 180px;
+    width: 180px;
+    height: 50px;
     background-color: white;
     color: black;
     border: 1px solid #ccc;
@@ -76,17 +96,24 @@ main{
 
 .keysRow {
     display: flex;
-    gap: 2px;
-    
+    flex-direction: column;
+
+    gap: 2px; 
 }
 
 .SLIDERS {
     /**/
-
-    align-items: flex-end;
-
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
 }
 
+.instrument-area {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
 
 dialog {
     /*align-items: center;*/
