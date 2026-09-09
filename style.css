@@ -77,6 +77,9 @@ main{
 #visualiser { /*test for now*/
     background-color: #ffffff76;
     flex: 1; /*fills*/
+    margin-left: -20px;
+    position: relative;
+    z-index: 1;
 }
 
 .whiteKey {
@@ -85,7 +88,7 @@ main{
     background-color: white;
     color: black;
     border: 1px solid #ccc;
-    border-radius: 0 0 6px 6px;
+    border-radius:0 6px 6px 0; /*keys rounded on the right side*/
     font-weight: bold;
     font-size: 1rem;
 }
@@ -97,8 +100,10 @@ main{
 .keysRow {
     display: flex;
     flex-direction: column;
-
     gap: 2px; 
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
 }
 
 .SLIDERS {
@@ -112,7 +117,9 @@ main{
 .instrument-area {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 1rem;
+    height: 100%;
 }
 
 dialog {
