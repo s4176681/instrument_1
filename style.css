@@ -75,8 +75,10 @@ main{
     position: fixed;
 }
 
-#volume {
+.SLIDERS {
     /**/
+
+    align-items: flex-end;
 
     top: 50%;
     left: 100px;

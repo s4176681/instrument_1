@@ -90,28 +90,3 @@ key.addEventListener("mouseup", endNote);
 key.addEventListener("mouseleave", endNote);
 
 
-// audio file playback
-const playbackButton = document.getElementById("playback-button");
-const audioTrack = document.getElementById("audio-track");
-
-function playAudio() { // PLAY
-    if(audioTrack.paused === true){
-        audioTrack.play();
-    } else {
-        audioTrack.pause();
-    }
-}
-playbackButton.addEventListener("click", playAudio);
-
-
-
-// randomly scrub to a location
-const randomButton = document.getElementById("random-location");
-// move playback to random pos
-function randomLocation(){
-    // file duration
-    let trackLength = audioTrack.duration;
-    audioTrack.currentTime = trackLength * Math.random();
-}
-
-randomButton.addEventListener("click", randomLocation);
