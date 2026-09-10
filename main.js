@@ -99,11 +99,8 @@ function endNote(e) {
     console.log(note);
     //right amount of time
     synth.triggerRelease(note);
-    flashCanvas("#ffffff76"); //reset colour
+    flashCanvas(rgb(136, 136, 136)); //reset colour
 }
-
-
-
 
 
 const allKeys = document.querySelectorAll(".whiteKey");

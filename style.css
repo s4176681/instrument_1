@@ -6,7 +6,7 @@
     --colour-01: black;
     --colour-02: white;
     --colour-03: rgba(14, 35, 75, 0.667);
-    --colour-04: lightgrey;
+    --colour-04: rgb(136, 136, 136);
 
 }
 
@@ -75,7 +75,7 @@ main{
 }
 
 #visualiser { /*test for now*/
-    background-color: #ffffff76;
+    background-color: var(--colour-04);
     flex: 1; /*fills*/
     margin-left: -20px;
     position: relative;
@@ -111,7 +111,8 @@ main{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.1rem;
+
 }
 
 .instrument-area {
