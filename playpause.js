@@ -1,4 +1,4 @@
-const playPauseButton = document.querySelector(".playPauseButton");
+//const playPauseButton = document.querySelector(".playPauseButton");
 const playPauseIcon = playPauseButton.querySelector("img");
 
 let isPlaying = false;
