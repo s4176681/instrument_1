@@ -1,4 +1,3 @@
-
 //document.body.style.backgroundColor = "red";
 // get button
 //const testButton = document.getElementById("test-button");
@@ -99,8 +98,11 @@ function endNote(e) {
     console.log(note);
     //right amount of time
     synth.triggerRelease(note);
-    flashCanvas(rgb(136, 136, 136)); //reset colour
+    flashCanvas("#ffffff76"); //reset colour
 }
+
+
+
 
 
 const allKeys = document.querySelectorAll(".whiteKey");
@@ -113,5 +115,3 @@ allKeys.forEach(function(keyButton){ //claude helped here to better understand h
     keyButton.addEventListener("mouseup", endNote);
     keyButton.addEventListener("mouseleave", endNote);
 })
-
-
