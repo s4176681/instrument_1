@@ -81,16 +81,31 @@ function endNote(e) {
 
 
 
-
+// getting maths correct before applying code
 const allKeys = document.querySelectorAll(".whiteKey");
+const numberOfKeys = allKeys.length;
+const radius = 150; //distance from centre in PX
+const centerX = 200; //container centre
+const centerY = 200;
 
+allKeys.forEach(function(keyButton, index){ //claude helped here to better understand how wiring all the buttons together work.
+    // circle layout
+    let angle = (index / numberOfKeys) * 2 * Math.PI; // full circle in radians
+    let x = centerX + radius * Math.cos(angle); // using trigonometry
+    let y = centerY + radius * Math.sin(angle);
 
-allKeys.forEach(function(keyButton){ //claude helped here to better understand how wiring all the buttons together work.
+    keyButton.style.position = "aobsolute";
+    keyButton.style.left = x + "px";
+    keyButton.style.top = y + "px";
+    keyButton.style.transformation = `rotate(${angle}rad)`; //facing outwards, angular
+    
+    
     // forEach only exists on array like collections. Thats why there was an issue her before.
     keyButton.addEventListener("mousedown", playNote);
     keyButton.addEventListener("mouseenter", playNote);
     keyButton.addEventListener("mouseup", endNote);
     keyButton.addEventListener("mouseleave", endNote);
-})
+});
+
 
 
