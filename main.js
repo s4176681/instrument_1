@@ -107,13 +107,13 @@ function endNote(e) {
 // LAYOUT + Sliding function
 const allKeys = document.querySelectorAll(".whiteKey");
 const numberOfKeys = allKeys.length;
-const radius = 120; //change this to adjust how compact the keys are
+const radius = 1000; //change this to adjust how compact the keys are
 
-const centerX = canvas.width / 2; // change these for the placement of the keys
-const centerY = canvas.height * 0.9;
+const centerX = 400; // change these for the placement of the keys
+const centerY = 1100;
 
-const arcSpan = Math.PI; // 180 degrees total spread, change this!!
-const arcStartAngle = Math.PI / 2 - arcSpan / 2; // centres the arc around
+const arcSpan = Math.PI * 0.2; // 180 degrees total spread, change this!!
+const arcStartAngle = -Math.PI / 2 - arcSpan / 2; // centres the arc around, also the direction its facing
 
 
 allKeys.forEach(function(keyButton, index){ //claude helped here to better understand how wiring all the buttons together work.
