@@ -35,6 +35,27 @@ introModal.addEventListener("close", toneInit);
 
 
 
+// COLOURING
+const canvas = document.getElementById("visualiser");
+const ctx = canvas.getContext("2d");
+
+function flashCanvas(colour){ //colouring
+    ctx.fillStyle = colour;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+const noteColours = {
+    "C4": "lightpink",
+    "D4": "lightyellow",
+    "E4": "lightgreen",
+    "F4": "lightblue",
+    "G4": "plum",
+    "A4": "peachpuff",
+    "B4": "lightcyan",
+    "C5": "lightgray"
+}
+
+
 //TONE + usage
 // create instrument and connect to audio
 // html -> js -> open modal -> ok -> modal closes -> audio init
@@ -62,7 +83,7 @@ function playNote(e){
     // if mouse button is held previously play note
     if(e.buttons === 1){ //// WORKS FOR OUR BROWSER, awkwardly optimised.
         synth.triggerAttack(note);
-
+        flashCanvas(noteColours[note]);
     }
 }
 
@@ -75,7 +96,7 @@ function endNote(e) {
     console.log(note);
     //right amount of time
     synth.triggerRelease(note);
-
+    flashCanvas("rgb(136, 136, 136)");
 }
 
 
