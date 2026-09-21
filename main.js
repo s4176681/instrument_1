@@ -94,10 +94,10 @@ allKeys.forEach(function(keyButton, index){ //claude helped here to better under
     let x = centerX + radius * Math.cos(angle); // using trigonometry
     let y = centerY + radius * Math.sin(angle);
 
-    keyButton.style.position = "aobsolute";
+    keyButton.style.position = "absolute";
     keyButton.style.left = x + "px";
     keyButton.style.top = y + "px";
-    keyButton.style.transformation = `rotate(${angle}rad)`; //facing outwards, angular
+    keyButton.style.transform = `rotate(${angle}rad)`; //facing outwards, angular
     
     
     // forEach only exists on array like collections. Thats why there was an issue her before.
