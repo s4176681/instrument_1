@@ -24,7 +24,9 @@ body {
     color: var(--colour-01);
     padding: 10px;
 
-    inset: 0; /*pins all edges to the viewport.*/
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 
@@ -77,12 +79,10 @@ main{
 
 }
 
-#visualiser { /*test for now*/
+#visualiser { /*test for now, CANVAS*/
     background-color: #ffffff76;
     flex: 1; /*fills*/
-    margin-left: -20px;
-    position: relative;
-    z-index: 1;
+
 }
 
 .whiteKey {
@@ -109,6 +109,9 @@ main{
 
 .keysRow {
     position: absolute; /*overlay directly on top of canvas*/
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 400px;
     height: 400px;
     z-index: 2;
