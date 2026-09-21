@@ -104,11 +104,29 @@ function endNote(e) {
 
 
 
-
+// LAYOUT + Sliding function
 const allKeys = document.querySelectorAll(".whiteKey");
+const numberOfKeys = allKeys.length;
+const radius = 120; //change this to adjust how compact the keys are
+
+const centerX = canvas.width / 2; // change these for the placement of the keys
+const centerY = canvas.height * 0.9;
+
+const arcSpan = Math.PI; // 180 degrees total spread, change this!!
+const arcStartAngle = Math.PI / 2 - arcSpan / 2; // centres the arc around
 
 
-allKeys.forEach(function(keyButton){ //claude helped here to better understand how wiring all the buttons together work.
+allKeys.forEach(function(keyButton, index){ //claude helped here to better understand how wiring all the buttons together work.
+    //angular formatting
+    let angle = arcStartAngle + (index / (numberOfKeys - 1)) * arcSpan;
+    let x = centerX + radius * Math.cos(angle); // more trig
+    let y = centerY + radius * Math.sin(angle);
+
+    keyButton.style.position = "absolute";
+    keyButton.style.left = x + "px";
+    keyButton.style.top = y + "px";
+    keyButton.style.transform = `rotate(${angle}rad)`;
+    
     // forEach only exists on array like collections. Thats why there was an issue her before.
     keyButton.addEventListener("mousedown", playNote);
     keyButton.addEventListener("mouseenter", playNote);
