@@ -20,9 +20,9 @@ html, body {
 
 body {
     font-family: "Roboto Mono";
-    background-color: var(--colour-03);
-    color: var(--colour-01);
-    padding: 10px;
+    background-color: #801414;
+    color: #5e2e2e;
+
 
     inset: 0; /*pins all edges to the viewport.*/
 }
@@ -34,6 +34,7 @@ header{
     left: 0;
     width: 100%;
     padding: 5px;
+    height: 150px;
 }
 
 .top-bar {
@@ -41,7 +42,8 @@ header{
     align-items: center;
     /*justify-content: 1rem 2rem;*/
     justify-content: space-between;
-    background-color: var(--colour-02);
+    background-color: #e57b7b;
+
     
 }
 
@@ -80,6 +82,7 @@ main{
     margin-left: -20px;
     position: relative;
     z-index: 1;
+    height: 480px;
 }
 
 .whiteKey {
