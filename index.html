@@ -28,23 +28,36 @@
 
     <header class="top-bar">
         <h1>Audio Instrument 1.3</h1>
-        <div class="divider"></div>
-        <div class="SLIDERS">
-            <!--This is for a slider-->
-            <div id="volume">
-                <label for="volume">1</label>
-                <input type="range" min="0" max="100" value="50">             
-            </div>
-            <div>
-                <label for="mixer">2</label>
-                <input type="range" min="0" max="100" value="50">
-            </div>
-            <div>
-                <label for="EQ">3</label>
-                <input type="range" min="0" max="100" value="50">
+
+        <!--A variety of buttons-->
+        <div class="control-group"> <!--Options-->
+            <label>Preset</label>
+            <div class="button-group">
+                <button class="preset-btn active">Calm</button>
+                <button class="preset-btn">Focus</button>
+                <button class="preset-btn">Edit</button>
             </div>
         </div>
+
+        <div class="control-group2">
+            <label for="Octive-adjust">Scale</label>
+            <select id="Octive-adjust">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label class="toggle-label">
+                <input type="checkbox" id="mute-toggle">
+                <span class="toggle-slider"></span>
+                Mute
+            </label>
+        </div>
+
         
+
     </header>
 
     <main> <!--creating a simple 7 note selection-->
