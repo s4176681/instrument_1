@@ -33,13 +33,13 @@
         <div class="control-group"> <!--Options-->
             <label>Preset</label>
             <div class="button-group">
-                <button class="preset-btn active">Calm</button>
-                <button class="preset-btn">Focus</button>
-                <button class="preset-btn">Edit</button>
+                <button class="preset-btn">Edit Mode</button>
+                <button class="preset-btn">Focus Mode</button>
+                <button class="preset-btn">Ambience Mode</button>
             </div>
         </div>
 
-        <div class="control-group2">
+        <div class="control-group">
             <label for="Octive-adjust">Scale</label>
             <select id="Octive-adjust">
                 <option value="High">High</option>
@@ -49,11 +49,14 @@
         </div>
 
         <div class="control-group">
-            <label class="toggle-label">
+            <label class="toggle-label">Mute</label>
                 <input type="checkbox" id="mute-toggle">
                 <span class="toggle-slider"></span>
-                Mute
-            </label>
+        </div>
+
+        <div class="control-group">
+            <label for="tempo-input">Tempo (BPM)</label>
+            <input type="number" id="tempo-input" min="1" max="100">
         </div>
 
         

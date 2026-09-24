@@ -42,21 +42,35 @@ h1 {
     width: 20%;
 }
 
-.top-bar {
+.top-bar { /*Learnability focus in Layout design in this prototype*/
     display: flex;
     align-items: center;
     /*justify-content: 1rem 2rem;*/
-    justify-content: space-between;
-    background-color: #e57b7b;
+    /*justify-content: space-between;*/
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 1rem 1.5rem;
 
-    
+    background-color: #e57b7b;
 }
 
-.divider {
-    width: 1px;
-    background-color: var(--colour-04);
-    align-self: stretch; /*same height as others the div is in*/
+.control-group{
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+}
 
+.control-group label {
+    font-weight: bold;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+.button-group { /*Group buttons close together*/
+    display: flex;
+    gap: 0.4rem;
 }
 
 main{
@@ -76,6 +90,10 @@ main{
     border-radius: 6px;
     font-weight: 800;
     border-color: rgba(47, 255, 0, 0.729);
+
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+    
 
 }
 
