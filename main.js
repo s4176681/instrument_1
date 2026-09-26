@@ -86,7 +86,7 @@ function playNote(e){
     if(e.buttons === 1){ //// WORKS FOR OUR BROWSER, awkwardly optimised.
         synth.triggerAttack(note);
         // new colour pulses!!
-        createPulse(noteColours[note]);
+        createPulse(noteColours[note], xPosition); // most commonly changed to change the reactivity of the visualiser.
     }
 }
 
@@ -148,8 +148,8 @@ function drawPulses(){
         ctx.fill();
 
         //grow the circle and fade outs
-        pulse.radius += 2;
-        pulse.alpha -= 0.015;
+        pulse.radius += 8; // CHANGE THIS TO CHANGE HOW BIG THE PULSE IS!
+        pulse.alpha -= 0.015; // Prolonged state of the colour, how long the colour stays and spread.
     });
 
     //remove pulses that have fully faded
@@ -158,6 +158,17 @@ function drawPulses(){
     });
 
     requestAnimationFrame(drawPulses);
+}
+
+function createPulse(colour, xPosition){
+    pulse.push({
+        x: xPosition,
+        y: canvas.height / 2,
+        radius: 10,
+        maxRadius: 150,
+        alpha: 1,
+        colour: colour
+    });
 }
 
 drawPulses(); // kick off the animation loop once when page loads.
