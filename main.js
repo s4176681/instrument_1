@@ -146,5 +146,18 @@ function drawPulses(){
         ctx.beginPath();
         ctx.arc(pulse.x, pulse.y, pulse.radius, 0, Math.PI * 2);
         ctx.fill();
-    })
+
+        //grow the circle and fade outs
+        pulse.radius += 2;
+        pulse.alpha -= 0.015;
+    });
+
+    //remove pulses that have fully faded
+    pulses = pulses.filter(function(pulse){
+        return pulse.alpha > 0;
+    });
+
+    requestAnimationFrame(drawPulses);
 }
+
+drawPulses(); // kick off the animation loop once when page loads.
