@@ -98,10 +98,8 @@ function endNote(e) {
     console.log(note);
     //right amount of time
     synth.triggerRelease(note);
-    flashCanvas("#ffffff76"); //reset colour
+    flashCanvas("#000000"); //reset colour
 }
-
-
 
 
 
@@ -115,3 +113,38 @@ allKeys.forEach(function(keyButton){ //claude helped here to better understand h
     keyButton.addEventListener("mouseup", endNote);
     keyButton.addEventListener("mouseleave", endNote);
 })
+
+
+// claude helped me break down the components and pieces I needed to understand and create a visualiser. All code is hand typed, 0 ctrl c unless tracing back code that has already been typed in the past.
+// array tracking pulses
+let pulses = [];
+
+function createPulse(colour){
+    pulses.push({
+        x: canvas.width / 2, //centre of canvas, adjust to visualiser
+        y: canvas.height / 2,
+        radius: 10,
+        maxRadius: 150,
+        alpha: 1, //starting opactiy
+        colour: colour
+    });
+}
+
+function drawPulses(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // clear previous frame
+
+    pulses.forEach(function(pulse){
+        let gradient = ctx.createRadialGradient(
+            pulse.x, pulse.y, 0, //inner circle
+            pulse.x, pulse,y pulse.radius //outer circle
+        );
+        gradient.addColorStop(0, pulse.colour);
+        gradient.addColourStop(1, "transparent");
+
+        ctx.globalAlpha = pulse.alpha; //drawing
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(pulse.x, pulse.y, pulse.radius, 0, Math.PI * 2);
+        ctx.fill();
+    })
+}

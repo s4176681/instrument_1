@@ -20,8 +20,8 @@ html, body {
 
 body {
     font-family: "Roboto Mono";
-    background-color: var(--colour-03);
-    color: var(--colour-01);
+    background-color: #0a143a;
+    color: #124885;
     padding: 10px;
 
     inset: 0; /*pins all edges to the viewport.*/
@@ -75,7 +75,7 @@ main{
 }
 
 #visualiser { /*test for now*/
-    background-color: var(--colour-04);
+    background-color: #000000;
     flex: 1; /*fills*/
     margin-left: -20px;
     position: relative;
