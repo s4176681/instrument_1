@@ -85,7 +85,8 @@ function playNote(e){
     // if mouse button is held previously play note
     if(e.buttons === 1){ //// WORKS FOR OUR BROWSER, awkwardly optimised.
         synth.triggerAttack(note);
-        flashCanvas(noteColours[note]); // choose colour here
+        // new colour pulses!!
+        createPulse(noteColours[note]);
     }
 }
 
@@ -135,7 +136,7 @@ function drawPulses(){
     pulses.forEach(function(pulse){
         let gradient = ctx.createRadialGradient(
             pulse.x, pulse.y, 0, //inner circle
-            pulse.x, pulse,y, pulse.radius //outer circle
+            pulse.x, pulse.y, pulse.radius //outer circle
         );
         gradient.addColorStop(0, pulse.colour);
         gradient.addColorStop(1, "transparent");
