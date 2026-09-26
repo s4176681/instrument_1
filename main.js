@@ -63,6 +63,18 @@ const noteColours = {
 // html -> js -> open modal -> ok -> modal closes -> audio init
 const synth = new Tone.PolySynth();
 
+//Pulse function definition
+function createPulse(colour, xPosition){
+    pulses.push({
+        x: xPosition, //centre of canvas, adjust to visualiser
+        y: canvas.height / 2,
+        radius: 10,
+        maxRadius: 150,
+        alpha: 1, //starting opactiy
+        colour: colour
+    });
+}
+
 function toneInit(){
     Tone.start().then(function(){
         console.log("audio is ready");
@@ -85,6 +97,10 @@ function playNote(e){
     // if mouse button is held previously play note
     if(e.buttons === 1){ //// WORKS FOR OUR BROWSER, awkwardly optimised.
         synth.triggerAttack(note);
+
+        let keyIndex = Array.from(allKeys).indexOf(keyPressed);
+        let xPosition = (canvas.width / (allKeys.length + 1)) * (keyIndex + 1);
+
         // new colour pulses!!
         createPulse(noteColours[note], xPosition); // most commonly changed to change the reactivity of the visualiser.
     }
@@ -119,17 +135,6 @@ allKeys.forEach(function(keyButton){ //claude helped here to better understand h
 // array tracking pulses
 let pulses = [];
 
-function createPulse(colour){
-    pulses.push({
-        x: canvas.width / 2, //centre of canvas, adjust to visualiser
-        y: canvas.height / 2,
-        radius: 10,
-        maxRadius: 150,
-        alpha: 1, //starting opactiy
-        colour: colour
-    });
-}
-
 function drawPulses(){
     ctx.clearRect(0, 0, canvas.width, canvas.height); // clear previous frame
 
@@ -158,17 +163,9 @@ function drawPulses(){
     });
 
     requestAnimationFrame(drawPulses);
+
 }
 
-function createPulse(colour, xPosition){
-    pulse.push({
-        x: xPosition,
-        y: canvas.height / 2,
-        radius: 10,
-        maxRadius: 150,
-        alpha: 1,
-        colour: colour
-    });
-}
+
 
 drawPulses(); // kick off the animation loop once when page loads.
