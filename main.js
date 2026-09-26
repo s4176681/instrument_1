@@ -98,7 +98,6 @@ function endNote(e) {
     console.log(note);
     //right amount of time
     synth.triggerRelease(note);
-    flashCanvas("#000000"); //reset colour
 }
 
 
@@ -136,10 +135,10 @@ function drawPulses(){
     pulses.forEach(function(pulse){
         let gradient = ctx.createRadialGradient(
             pulse.x, pulse.y, 0, //inner circle
-            pulse.x, pulse,y pulse.radius //outer circle
+            pulse.x, pulse,y, pulse.radius //outer circle
         );
         gradient.addColorStop(0, pulse.colour);
-        gradient.addColourStop(1, "transparent");
+        gradient.addColorStop(1, "transparent");
 
         ctx.globalAlpha = pulse.alpha; //drawing
         ctx.fillStyle = gradient;
