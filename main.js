@@ -166,8 +166,8 @@ allKeys.forEach(function(keyButton){ //claude helped here to better understand h
 let layers = []; //every visible layer
 let activeLayers = {}; //the layer belonging to each currently held note
 
-const wipeSpeed = 0.02;
-const fadeSpeed = 0.015;
+const wipeSpeed = 0.01;
+const fadeSpeed = 0.025;
 const softEdge = 300;
 
 function createLayer(note, colours){
@@ -188,9 +188,13 @@ function drawLayers(){
         //advance the wipe
         layer.wipe = Math.min(layer.wipe + wipeSpeed, 1);
         //only fade once the key released
-        if(!layer.held){ //being released
-            layer.alpha -= fadeSpeed;
+        if(!layer.held){ //error being drawn in the negative before, fixed ver here
+            layer.alpha = Math.max(layer.alpha - fadeSpeed, 0); //never below 0
         }
+
+        if(layer.alpha <= 0){
+            return; // fully faded, skip drawing.
+        } // claude assisted me with debugging and developing hard to understand sections of the code. Especially with the wide in and fade out aspect. Design choices, ideation, and conceptualing was all thought out and planned before hand.
 
         //colour gradient across the canvas
         let stops = layer.colours.length === 1 ? [layer.colours[0], layer.colours[0]] : layer.colours;
