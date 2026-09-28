@@ -197,6 +197,54 @@ allKeys.forEach(function(keyButton){ //claude helped here to better understand h
     keyButton.addEventListener("mouseleave", endNote);
 })
 
+
+
+//NOTE BLOCKING
+const noteOrder = Array.from(allKeys).map(function(k){ return k.dataset.note; });
+const rowHeight = canvas.height / noteOrder.length;
+
+let blocks = {}; //note x position of its block
+let prevPlayheadX = 0; //when dial/playhead crosses the block
+
+if(isPlaying){
+    block[note] = playheadX; //no new blocks should be made
+}
+
+function drawBlocks(){
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = "white";
+
+    for(let note in blocks){ //seperate each block, leaves a gap
+        let rowIndex = noteOrder.indexOf(note);
+        let y = rowIndex * rowHeight;
+        ctx.fillRect(block[note] - 5, y, 10, rowHeight - 2);
+    }
+}
+
+function checkBlockCrossing(){
+    if(!isPlaying) return;
+
+    for(let note in blocks){
+        let x = blocks[note];
+        let crossed;
+
+        if(playheadX >= prevPlayheadX){
+            //check if the block sits bewteen the last frame this frame
+            crossed = x > prevPlayheadX && x <= playheadX; //checking jumping between px
+        } else {
+            //the loop just wrap around, check both ends
+            crossed = x > prevPlayheadX || x <= playheadX;
+        }
+
+        if(crossed){ //play note
+            synth.triggerAttackRelease(note, "8n");
+        }
+    }
+
+    prevPlayheadX = playheadX;
+}
+
+
 //ANIMATING A WIPE
 let layers = []; //every visible layer
 let activeLayers = {}; //the layer belonging to each currently held note
