@@ -9,7 +9,7 @@
 let isPlaying = false;
 let playStartTIme = 0;
 let playheadX = 0;
-const loopDuration = 8000; //ms for one full pass, in short - duration of the slider
+const loopDuration = 4000; //ms for one full pass, in short - duration of the slider
 
 const playPauseButton = document.querySelector(".playPauseButton");
 const playPauseIcon = playPauseButton.querySelector("img");
@@ -28,14 +28,12 @@ playPauseButton.addEventListener("click", function(){
         playPauseIcon.alt = "Play Button"
     }
 });
-
 function updatePlayhead(){
     if(!isPlaying) return;
     let elapsed = performance.now() - playStartTIme;
     let progress = (elapsed % loopDuration) / loopDuration; //0 to 1, wrapping
     playheadX = canvas.width - progress * canvas.width; //within the visualiser, from end to end, righ to left logic.
 }
-
 function drawPlayhead(){
     if(!isPlaying) return;
     ctx.globalAlpha = 1;
