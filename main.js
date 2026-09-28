@@ -43,9 +43,6 @@ function drawPlayhead(){
     ctx.fillRect(playheadX - 1, 0, 2, canvas.height);
 }
 
-updatePlayhead();
-drawPlayhead(); //calling them
-
 
 //MODAL
 //find intro modal
@@ -256,6 +253,9 @@ function drawLayers(){
     });
 
     ctx.globalAlpha = 1 //reset
+
+    updatePlayhead();
+    drawPlayhead(); //calling them  
 
     //drop layers that have fully faded
     layers = layers.filter(function(layer){
