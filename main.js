@@ -102,7 +102,10 @@ function endNote(e) {
 }
 
 
+const chords = {
+    "C4": ["C4", "E4", "G4"],
 
+};
 
 
 const allKeys = document.querySelectorAll(".whiteKey");
