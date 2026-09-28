@@ -153,3 +153,62 @@ allKeys.forEach(function(keyButton){ //claude helped here to better understand h
     keyButton.addEventListener("mouseleave", endNote);
 })
 
+//ANIMATING A WIPE
+let layers = []; //every visible layer
+let activeLayers = {}; //the layer belonging to each currently held note
+
+const wipeSpeed = 0.02;
+const fadeSpeed = 0.015;
+const softEdge = 300;
+
+function createLayer(note, colours){
+    //if this note already has a layer, release
+    if(activeLayers[note]){
+        activeLayers[note].held = false;
+    }
+    let layer = { colours: colours, wipe: 0, alpha: 1, held: true };
+    layers.push(layer);
+    activeLayers[note] = layer;
+}
+
+//draw loop
+function drawLayers(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    layers.forEach(function(layer){
+        //advance the wipe
+        layer.wipe = Math.min(layer.wipe + wipeSpeed, 1);
+        //only fade once the key released
+        if(!layer.held){ //being released
+            layer.alpha -= fadeSpeed;
+        }
+
+        //colour gradient across the canvas
+        let stop = layer.colours.length === 1 ? [layer.colours[0], layer.colours[0]] : layer.colours;
+        let gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        stops.forEach(function(c, i){
+            gradient.addColorStop(i / (stops.length - 1), c);
+        });
+        ctx.fillStyle = gradient;
+
+        //where the leading edge of the wipe is
+        let front = layer.wipe * (canvas.width + softEdge);
+
+        //paint in thin strips
+        for(let x = 0; x < canvas.width; x += 4){
+            let stripAlpha = Math.min(Math.max((front - x) / softEdge, 0), 1);
+            ctx.globalAlpha = layer.alpha * stripAlpha;
+            ctx.fillRect(x, 0, 4, canvas.height);
+        }
+    });
+
+    ctx.globalAlpha = 1 //reset
+
+    //drop layers that have fully faded
+    layers = layer.filter(function(layer){
+        return layer.alpha > 0;
+    });
+
+    requestAnimationFrame(drawLayers);
+
+}
