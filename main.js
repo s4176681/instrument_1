@@ -52,7 +52,11 @@ const noteColours = {
     "G4": "plum",
     "A4": "peachpuff",
     "B4": "lightcyan",
-    "C5": "lightgray"
+
+    "C5": "lightgray",
+    "D5": "lightsalmon",
+    "E5": "khaki", // experimental colouring
+    "G5": "thistle"
 }
 
 
@@ -96,11 +100,26 @@ function endNote(e) {
     // find data note
     let note = keyPressed.dataset.note;
     console.log(note);
-    //right amount of time
-    synth.triggerRelease(note);
-    flashCanvas("#ffffff76"); //reset colour
+
+    let mode = document.getElementById("play-mode").value;
+
+    if(mode === "chord"){
+        synth.triggerAttack(chords[note]);
+    } else {
+        synth.triggerAttack(note);
+    }
+
+    flashCanvas("#2a2a2a"); //reset colour
 }
 
+function flashChords(notes){
+    let gradient = ctx.createLinearGradient(0, 0, canvas.width, 0); //defining a gradient line.
+    notes.forEach(function(n, i){
+        gradient.addColourStop(i / (notes.length - 1), noteColours[n]); //spread the stops evenly
+    });
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
 
 const chords = {
     "C4": ["C4", "E4", "G4"],
@@ -125,10 +144,14 @@ allKeys.forEach(function(keyButton){ //claude helped here to better understand h
     keyButton.addEventListener("mouseleave", endNote);
 })
 
-let mode = document.getElementById("play-mode").value;
+if(e.buttons === 1){
+    let mode = document.getElementById("play-mode").value;
 
-if(mode === "chord"){
-    synth.triggerAttack(chord[note]);
-} else {
-    synth.triggerAttack(note);
+    if(mode === "chord"){
+        synth.triggerAttack(chords[note]);
+    } else {
+        synth.triggerAttack(note);
+    }
+
+    flashCanvas(noteColours[note]);
 }

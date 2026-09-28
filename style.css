@@ -39,7 +39,8 @@ header{
 .top-bar {
     display: flex;
     align-items: center;
-    /*justify-content: 1rem 2rem;*/
+
+    justify-content: space-between;
 
     background-color: var(--colour-02);
 
@@ -77,7 +78,7 @@ main{
 }
 
 #visualiser { /*test for now*/
-    background-color: var(--colour-04);
+    background-color: #2a2a2a;
     flex: 1; /*fills*/
     margin-left: -20px;
     position: relative;
