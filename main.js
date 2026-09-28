@@ -104,7 +104,13 @@ function endNote(e) {
 
 const chords = {
     "C4": ["C4", "E4", "G4"],
-
+    "D4": ["D4", "F4", "A4"],
+    "E4": ["E4", "G4", "B4"],
+    "F4": ["F4", "A4", "C5"],
+    "G4": ["G4", "B4", "D5"],
+    "A4": ["A4", "C5", "E5"],
+    "B4": ["B4", "D5", "F5"],
+    "C5": ["C5", "E5", "G5"]
 };
 
 
@@ -118,3 +124,11 @@ allKeys.forEach(function(keyButton){ //claude helped here to better understand h
     keyButton.addEventListener("mouseup", endNote);
     keyButton.addEventListener("mouseleave", endNote);
 })
+
+let mode = document.getElementById("play-mode").value;
+
+if(mode === "chord"){
+    synth.triggerAttack(chord[note]);
+} else {
+    synth.triggerAttack(note);
+}
