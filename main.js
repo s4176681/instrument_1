@@ -3,6 +3,50 @@
 //const testButton = document.getElementById("test-button");
 //
 //const key = document.getElementById("key-test")
+
+
+//PLAYHEAD
+let isPlaying = false;
+let playStartTIme = 0;
+let playheadX = 0;
+const loopDuration = 8000; //ms for one full pass, in short - duration of the slider
+
+const playPauseButton = document.querySelector(".playPauseButton");
+const playPauseIcon = playPauseButton.querySelector("img");
+const playIconSrc = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
+const pauseIconSrc = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
+
+playPauseButton.addEventListener("click", function(){
+    isPlaying = !isPlaying;
+
+    if(isPlaying){
+        playStartTIme = performance.now(); //restart the loop from beginning
+        playPauseIcon.src = pauseIconSrc;
+        playPauseIcon.alt = "Pause Button";
+    } else {
+        playPauseIcon.src = playIconSrc;
+        playPauseIcon.alt = "Play Button"
+    }
+});
+
+function updatePlayhead(){
+    if(!isPlaying) return;
+    let elapsed = performance.now() - playStartTIme;
+    let progress = (elapsed % loopDuration) / loopDuration; //0 to 1, wrapping
+    playheadX = canvas.width - progress * canvas.width; //within the visualiser, from end to end, righ to left logic.
+}
+
+function drawPlayhead(){
+    if(!isPlaying) return;
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = "white";
+    ctx.fillRect(playheadX - 1, 0, 2, canvas.height);
+}
+
+updatePlayhead();
+drawPlayhead(); //calling them
+
+
 //MODAL
 //find intro modal
 const introModal = document.getElementById("intro-modal");
@@ -18,12 +62,6 @@ window.addEventListener("mousedown", function(){ //
 window.addEventListener("mouseup", function(){ 
     mouseButtonDown = false;
 });
-
-
-
-
-
-//MODAL
 introModal.showModal();
 // when click close
 okButton.addEventListener("click", function closeIntroModal() {
@@ -31,6 +69,8 @@ okButton.addEventListener("click", function closeIntroModal() {
 });
 //function closeIntroModal()
 introModal.addEventListener("close", toneInit);
+
+
 
 
 
