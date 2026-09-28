@@ -56,6 +56,7 @@ const noteColours = {
     "C5": "lightgray",
     "D5": "lightsalmon",
     "E5": "khaki", // experimental colouring
+    "F5": "lightseagreen",
     "G5": "thistle"
 }
 
@@ -87,9 +88,17 @@ function playNote(e){
     console.log(note);
     // play the note for the right amount of time
     // if mouse button is held previously play note
-    if(e.buttons === 1){ //// WORKS FOR OUR BROWSER, awkwardly optimised.
-        synth.triggerAttack(note);
-        flashCanvas(noteColours[note]); // choose colour here
+
+    if(e.buttons === 1){
+        let mode = document.getElementById("play-mode").value;
+
+        if(mode === "chord"){
+            synth.triggerAttack(chords[note]);
+            flashChords(chords[note]); // chords, but actually note, gradient colour for chords.
+        } else {
+            synth.triggerAttack(note);
+            flashCanvas(noteColours[note]); // flate colour for single notes.
+        }
     }
 }
 
@@ -104,9 +113,9 @@ function endNote(e) {
     let mode = document.getElementById("play-mode").value;
 
     if(mode === "chord"){
-        synth.triggerAttack(chords[note]);
+        synth.triggerRelease(chords[note]); // STOP PLAYING!
     } else {
-        synth.triggerAttack(note);
+        synth.triggerRelease(note);
     }
 
     flashCanvas("#2a2a2a"); //reset colour
@@ -115,7 +124,7 @@ function endNote(e) {
 function flashChords(notes){
     let gradient = ctx.createLinearGradient(0, 0, canvas.width, 0); //defining a gradient line.
     notes.forEach(function(n, i){
-        gradient.addColourStop(i / (notes.length - 1), noteColours[n]); //spread the stops evenly
+        gradient.addColorStop(i / (notes.length - 1), noteColours[n]); //spread the stops evenly
     });
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -144,14 +153,3 @@ allKeys.forEach(function(keyButton){ //claude helped here to better understand h
     keyButton.addEventListener("mouseleave", endNote);
 })
 
-if(e.buttons === 1){
-    let mode = document.getElementById("play-mode").value;
-
-    if(mode === "chord"){
-        synth.triggerAttack(chords[note]);
-    } else {
-        synth.triggerAttack(note);
-    }
-
-    flashCanvas(noteColours[note]);
-}
