@@ -32,7 +32,7 @@ function updatePlayhead(){
     if(!isPlaying) return;
     let elapsed = performance.now() - playStartTIme;
     let progress = (elapsed % loopDuration) / loopDuration; //0 to 1, wrapping
-    playheadX = canvas.width - progress * canvas.width; //within the visualiser, from end to end, righ to left logic.
+    playheadX = progress * canvas.width; //within the visualiser, from end to end, righ to left logic.
 }
 function drawPlayhead(){
     if(!isPlaying) return;
