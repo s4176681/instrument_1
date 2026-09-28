@@ -40,8 +40,10 @@ header{
     display: flex;
     align-items: center;
     /*justify-content: 1rem 2rem;*/
-    justify-content: space-between;
+
     background-color: var(--colour-02);
+
+    height: 100px;
     
 }
 
