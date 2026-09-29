@@ -139,6 +139,10 @@ function playNote(e){
         }
 
         createLayer(note, colours);
+
+        if(isPlaying){
+            blocks[note] = playheadX; //no new blocks should be made
+        }
     }
 }
 
@@ -206,10 +210,6 @@ const rowHeight = canvas.height / noteOrder.length;
 let blocks = {}; //note x position of its block
 let prevPlayheadX = 0; //when dial/playhead crosses the block
 
-if(isPlaying){
-    block[note] = playheadX; //no new blocks should be made
-}
-
 function drawBlocks(){
     ctx.globalAlpha = 1;
     ctx.fillStyle = "white";
@@ -217,7 +217,7 @@ function drawBlocks(){
     for(let note in blocks){ //seperate each block, leaves a gap
         let rowIndex = noteOrder.indexOf(note);
         let y = rowIndex * rowHeight;
-        ctx.fillRect(block[note] - 5, y, 10, rowHeight - 2);
+        ctx.fillRect(blocks[note] - 5, y, 10, rowHeight - 2);
     }
 }
 
@@ -302,6 +302,9 @@ function drawLayers(){
 
     updatePlayhead();
     drawPlayhead(); //calling them  
+
+    drawBlocks();
+    checkBlockCrossing();
 
     //drop layers that have fully faded
     layers = layers.filter(function(layer){
