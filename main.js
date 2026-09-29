@@ -249,7 +249,7 @@ function checkBlockCrossing(){
 let layers = []; //every visible layer
 let activeLayers = {}; //the layer belonging to each currently held note
 
-const wipeSpeed = 0.01;
+const wipeSpeed = 0.03;
 const fadeSpeed = 0.025;
 const softEdge = 300;
 
