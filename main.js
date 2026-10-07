@@ -21,6 +21,9 @@ playPauseButton.addEventListener("click", function(){
 
     if(isPlaying){
         playStartTIme = performance.now(); //restart the loop from beginning
+        playheadX = 0;
+        prevPlayheadX = 0;
+
         playPauseIcon.src = pauseIconSrc;
         playPauseIcon.alt = "Pause Button";
     } else {
