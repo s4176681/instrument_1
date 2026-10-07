@@ -20,8 +20,8 @@ html, body {
 
 body {
     font-family: "Roboto Mono";
-    background-color: #285439;
-    color: #419d64;
+    background-color: #2a2a2a;
+    color: #cb13b2;
     padding: 10px;
 
     inset: 0; /*pins all edges to the viewport.*/
@@ -42,9 +42,12 @@ header{
 .top-bar {
     display: flex;
     align-items: center;
-    /*justify-content: 1rem 2rem;*/
+
     justify-content: space-between;
+
     background-color: var(--colour-02);
+
+    height: 100px;
     
 }
 
@@ -81,8 +84,11 @@ main{
 }
 
 #visualiser { /*test for now*/
-    background-color: var(--colour-04);
-
+    background-color: #2a2a2a;
+    flex: 1; /*fills*/
+    margin-left: -20px;
+    position: relative;
+    z-index: 1;
 }
 
 .whiteKey {
