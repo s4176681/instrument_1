@@ -145,7 +145,7 @@ function endNote(e) {
     // find data note
     let note = e.target.dataset.note; //key Pressed doesn't exist in this ver
 
-    if(heldNotes[notes]){
+    if(heldNotes[note]){
         synth.triggerRelease(heldNotes[note]); // STOP PLAYING!
         delete heldNotes[note];
     }
@@ -231,7 +231,7 @@ function checkBlockCrossing(){
     if(!isPlaying) return;
 
     for(let note in blocks){
-        let x = blocks[note];
+        let x = blocks[note].pos; //pos
         let crossed;
 
         if(playheadX >= prevPlayheadX){
