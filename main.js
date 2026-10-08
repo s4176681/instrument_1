@@ -115,54 +115,39 @@ function toneInit(){
 }
 
 // action
-//testButton.addEventListener("click", playTestNote);
+//testButton.addEventListener("click", playTestNote);]
+function getMode(){
+    let select = document.getElementById("play-mode");
+    return select ? select.value : "single"; //fall back
+}
+
+let heldNotes = {}; //key note, the notes actually sounding
 
 function playNote(e){
-    // find the element that the event ran on
     let keyPressed = e.target;
-    console.log(keyPressed);
-    // find the data-note attribute of that element
     let note = keyPressed.dataset.note;
-    console.log(note);
-    // play the note for the right amount of time
-    // if mouse button is held previously play note
 
     if(e.buttons === 1){
-        let mode = document.getElementById("play-mode").value;
-        let colours;
+        let notesToPlay = getMode() === "chord" ? chords[note] : [note];
 
-        if(mode === "chord"){
-            synth.triggerAttack(chords[note]);
-            //flashChords(chords[note]); // chords, but actually note, gradient colour for chords.
-            colours = chords[note].map(function(n){ return noteColours[n]; });
-        } else {
-            synth.triggerAttack(note);
-            //flashCanvas(noteColours[note]); // flate colour for single notes.
-            colours = [noteColours[note]];
-        }
+        synth.triggerAttack(notesToPlay);
+        heldNotes[note] = notesToPlay;
 
-        createLayer(note, colours);
+        createLayer(note, notesToPlay.map(function(n){ return noteColours[n]; }));
 
         if(isPlaying){
-            blocks[note] = playheadX; //no new blocks should be made
+            blocks[note] = { pos: playheadX, notes: notesToPlay };
         }
     }
 }
 
 function endNote(e) {
-    // find element
-    let keyPressed = e.target;
-    console.log(keyPressed);
     // find data note
-    let note = keyPressed.dataset.note;
-    console.log(note);
+    let note = e.target.dataset.note; //key Pressed doesn't exist in this ver
 
-    let mode = document.getElementById("play-mode").value;
-
-    if(mode === "chord"){
-        synth.triggerRelease(chords[note]); // STOP PLAYING!
-    } else {
-        synth.triggerRelease(note);
+    if(heldNotes[notes]){
+        synth.triggerRelease(heldNotes[note]); // STOP PLAYING!
+        delete heldNotes[note];
     }
 
     //flashCanvas("#2a2a2a"); //reset colour
@@ -235,10 +220,10 @@ function drawBlocks(){
     ctx.globalAlpha = 1;
     ctx.fillStyle = "white";
 
-    for(let note in blocks){ //seperate each block, leaves a gap
+    for(let note in blocks){
         let rowIndex = noteOrder.indexOf(note);
         let y = rowIndex * rowHeight;
-        ctx.fillRect(blocks[note] - 5, y, 10, rowHeight - 2);
+        ctx.fillRect(blocks[note].pos - 5, y, 10, rowHeight - 2);
     }
 }
 
@@ -258,7 +243,7 @@ function checkBlockCrossing(){
         }
 
         if(crossed){ //play note
-            synth.triggerAttackRelease(note, "8n");
+            synth.triggerAttackRelease(blocks[note].notes, "8n");
         }
     }
 
