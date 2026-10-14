@@ -180,12 +180,12 @@ const chords = {
 // LAYOUT + Sliding function
 const allKeys = document.querySelectorAll(".whiteKey");
 const numberOfKeys = allKeys.length;
-const radius = 1000; //change this to adjust how compact the keys are
+const radius = 1300; //change this to adjust how compact the keys are
 
 const centerX = 400; // change these for the placement of the keys
-const centerY = 1100;
+const centerY = 1520;
 
-const arcSpan = Math.PI * 0.2; // 180 degrees total spread, change this!!
+const arcSpan = Math.PI * 0.15; // 180 degrees total spread, change this!!
 const arcStartAngle = -Math.PI / 2 - arcSpan / 2; // centres the arc around, also the direction its facing
 
 
@@ -207,7 +207,21 @@ allKeys.forEach(function(keyButton, index){ //claude helped here to better under
     keyButton.addEventListener("mouseleave", endNote);
 })
 
+const noteX = {};
 
+function measureColumns(){
+    const canvasRec = canvas.getBoundingClientRect();
+    const scale = canvas.width / canvasRect.width; //CSS may stretch the canvas, scaling towards that for future testing
+
+    allKeys.forEach(function(k){
+        const r = k.getBoundingClientRect();
+        const centreOnScreen = r.left + r.width / 2;
+        noteX[k.dataset.note] = (centreOnScreen - canvasRect.left) * scale;
+    });
+}
+
+measureColumns();
+window.addEventListener("resize", measureColumns);
 
 //NOTE BLOCKING
 const noteOrder = Array.from(allKeys).map(function(k){ return k.dataset.note; });
