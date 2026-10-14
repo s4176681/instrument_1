@@ -210,7 +210,7 @@ allKeys.forEach(function(keyButton, index){ //claude helped here to better under
 const noteX = {};
 
 function measureColumns(){
-    const canvasRec = canvas.getBoundingClientRect();
+    const canvasRect = canvas.getBoundingClientRect();
     const scale = canvas.width / canvasRect.width; //CSS may stretch the canvas, scaling towards that for future testing
 
     allKeys.forEach(function(k){
