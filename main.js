@@ -9,8 +9,9 @@
 let isPlaying = false;
 let playStartTIme = 0;
 let playheadY = 0;
+let currentProgress = 0; //sets the default playhead to 0
 const loopDuration = 4000; //ms for one full pass, in short - duration of the slider
-
+let currentStep = -1;
 const playPauseButton = document.querySelector(".playPauseButton");
 const playPauseIcon = playPauseButton.querySelector("img");
 const playIconSrc = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
@@ -24,7 +25,6 @@ playPauseButton.addEventListener("click", function(){
         
         //progress goes 0 to 1
         playheadY = canvas.height; //starts at bottom ends at top
-        prevPlayheadY = canvas.height;
 
         playPauseIcon.src = pauseIconSrc;
         playPauseIcon.alt = "Pause Button";
@@ -36,8 +36,8 @@ playPauseButton.addEventListener("click", function(){
 function updatePlayhead(){
     if(!isPlaying) return;
     let elapsed = performance.now() - playStartTIme;
-    let progress = (elapsed % loopDuration) / loopDuration; //0 to 1, wrapping
-    playheadY = canvas.height - progress * canvas.height; //within the visualiser, from end to end, righ to left logic.
+    currentProgress = (elapsed % loopDuration) / loopDuration; //0 to 1, wrapping
+    playheadY = canvas.height - currentProgress * canvas.height; //within the visualiser, from end to end, righ to left logic.
 }
 function drawPlayhead(){
     if(!isPlaying) return;
@@ -140,7 +140,9 @@ function playNote(e){
         createLayer(note, notesToPlay.map(function(n){ return noteColours[n]; }));
 
         if(isPlaying){
-            blocks[note] = { pos: playheadY, notes: notesToPlay };
+                let step = Math.round(currentProgress * stepsPerLoop) % stepsPerLoop;
+                if(!grid[note]) grid[note] = {};
+                grid[note][step] = notesToPlay;     //keeps the chord notes as well
         }
     }
 }
@@ -239,24 +241,21 @@ let blocks = {}; //note x position of its block
 let prevPlayheadY = 0; //when dial/playhead crosses the block
 
 let grid = {}; //note -> pressing C4 on step 4
-let step = Math.round(progress * stepsPerLoop) % stepsPerLoop;
-
-if(!grid[note]) grid[note] = {};
-grid[note][step] = notesToPlay;     //keeps the chord notes as well
 
 function drawBlocks(){
     ctx.globalAlpha = 1;
     ctx.fillStyle = "white";
 
-    for(let step in grid[note]){
-        const x = noteX[note] - 15;
-        const y = canvas.height - (Number(step) + 1) * stepHeight;
+    for(let note in grid){ //the outer loop
+        for(let step in grid[note]){
+            const x = noteX[note] - 15;
+            const y = canvas.height - (Number(step) + 1) * stepHeight;
 
-        ctx.fillRect(x, y, 30, stepHeight - 2);
+            ctx.fillRect(x, y, 30, stepHeight - 2);
+        }
     }
 }
 
-let currentStep = -1;
 //cross pixel checking -> block checking
 function triggerSteps(){
     if(!isPlaying) return;
@@ -334,7 +333,7 @@ function drawLayers(){
     drawPlayhead(); //calling them  
 
     drawBlocks();
-    checkBlockCrossing();
+    triggerSteps(); //was checkBlockCrossing
 
     //drop layers that have fully faded
     layers = layers.filter(function(layer){
