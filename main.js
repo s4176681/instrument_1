@@ -8,7 +8,7 @@
 //PLAYHEAD
 let isPlaying = false;
 let playStartTIme = 0;
-let playheadX = 0;
+let playheadY = 0;
 const loopDuration = 4000; //ms for one full pass, in short - duration of the slider
 
 const playPauseButton = document.querySelector(".playPauseButton");
@@ -21,8 +21,10 @@ playPauseButton.addEventListener("click", function(){
 
     if(isPlaying){
         playStartTIme = performance.now(); //restart the loop from beginning
-        playheadX = 0;
-        prevPlayheadX = 0;
+        
+        //progress goes 0 to 1
+        playheadY = canvas.height; //starts at bottom ends at top
+        prevPlayheadY = canvas.height;
 
         playPauseIcon.src = pauseIconSrc;
         playPauseIcon.alt = "Pause Button";
@@ -35,13 +37,15 @@ function updatePlayhead(){
     if(!isPlaying) return;
     let elapsed = performance.now() - playStartTIme;
     let progress = (elapsed % loopDuration) / loopDuration; //0 to 1, wrapping
-    playheadX = progress * canvas.width; //within the visualiser, from end to end, righ to left logic.
+    playheadY = canvas.height - progress * canvas.height; //within the visualiser, from end to end, righ to left logic.
 }
 function drawPlayhead(){
     if(!isPlaying) return;
     ctx.globalAlpha = 1;
     ctx.fillStyle = "white";
-    ctx.fillRect(playheadX - 1, 0, 2, canvas.height);
+
+    // drawing a line across the whole canvas instead of top to bottom
+    ctx.fillRect(0, playheadY - 1, canvas.width, 2);
 }
 
 
@@ -136,7 +140,7 @@ function playNote(e){
         createLayer(note, notesToPlay.map(function(n){ return noteColours[n]; }));
 
         if(isPlaying){
-            blocks[note] = { pos: playheadX, notes: notesToPlay };
+            blocks[note] = { pos: playheadY, notes: notesToPlay };
         }
     }
 }
@@ -227,42 +231,48 @@ window.addEventListener("resize", measureColumns);
 const noteOrder = Array.from(allKeys).map(function(k){ return k.dataset.note; });
 const rowHeight = canvas.height / noteOrder.length;
 
+//thinking out the clipping as steps
+const stepsPerLoop = 16;    //4x4
+const stepHeight = canvas.height / stepsPerLoop;
+
 let blocks = {}; //note x position of its block
-let prevPlayheadX = 0; //when dial/playhead crosses the block
+let prevPlayheadY = 0; //when dial/playhead crosses the block
+
+let grid = {}; //note -> pressing C4 on step 4
+let step = Math.round(progress * stepsPerLoop) % stepsPerLoop;
+
+if(!grid[note]) grid[note] = {};
+grid[note][step] = notesToPlay;     //keeps the chord notes as well
 
 function drawBlocks(){
     ctx.globalAlpha = 1;
     ctx.fillStyle = "white";
 
-    for(let note in blocks){
-        let rowIndex = noteOrder.indexOf(note);
-        let y = rowIndex * rowHeight;
-        ctx.fillRect(blocks[note].pos - 5, y, 10, rowHeight - 2);
+    for(let step in grid[note]){
+        const x = noteX[note] - 15;
+        const y = canvas.height - (Number(step) + 1) * stepHeight;
+
+        ctx.fillRect(x, y, 30, stepHeight - 2);
     }
 }
 
-function checkBlockCrossing(){
+let currentStep = -1;
+//cross pixel checking -> block checking
+function triggerSteps(){
     if(!isPlaying) return;
 
-    for(let note in blocks){
-        let x = blocks[note].pos; //pos
-        let crossed;
+    const step = Math.floor(currentProgress * stepsPerLoop);
 
-        if(playheadX >= prevPlayheadX){
-            //check if the block sits bewteen the last frame this frame
-            crossed = x > prevPlayheadX && x <= playheadX; //checking jumping between px
-        } else {
-            //the loop just wrap around, check both ends
-            crossed = x > prevPlayheadX || x <= playheadX;
-        }
-
-        if(crossed){ //play note
-            synth.triggerAttackRelease(blocks[note].notes, "8n");
+    if(step !== currentStep){ //if not current step...
+        currentStep = step;
+        for(let note in grid){
+            if(grid[note][step]){
+                synth.triggerAttackRelease(grid[note][step], "8n"); //if crossed play note
+            }
         }
     }
-
-    prevPlayheadX = playheadX;
 }
+
 
 
 //ANIMATING A WIPE
