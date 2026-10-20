@@ -83,12 +83,36 @@ main{
 
 }
 
+.canvas-wrap { position: relative; }
+
+#clearRows {
+    position: absolute;
+    right: 100%;
+    top: 0;
+    height: 100%;
+    width: 40px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.clear-btn {
+    flex: 1;
+    padding: 0;
+    background: transparent;
+    color: white;
+    border: 1px solid #888;
+    cursor: pointer;
+}
+
 #visualiser { /*test for now*/
     background-color: #2a2a2a;
     flex: 1; /*fills*/
     margin-left: -20px;
+
     position: relative;
     z-index: 1;
+
+    display: block;
 }
 
 .whiteKey {
