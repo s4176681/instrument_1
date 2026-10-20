@@ -98,10 +98,19 @@ main{
 .clear-btn {
     flex: 1;
     padding: 0;
-    background: transparent;
+    background: #8888886e;
     color: white;
-    border: 1px solid #888;
+    border: none;
+    border-bottom: 2px solid #2a2a2a;
+    font-size: 1.1rem;
+    font-weight: bold;
     cursor: pointer;
+}
+
+.clear-btn:hover {
+    background: #7a2e3973;
+    transform: scaleX(1.05); 
+    transform-origin: right; /*grows a little*/
 }
 
 #visualiser { /*test for now*/
