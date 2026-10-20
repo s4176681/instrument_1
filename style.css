@@ -31,12 +31,16 @@ body {
 }
 
 
-/*ELEMENT PLACEMENT*/
-header{
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 5px;
+
+
+.header-bar {
+    display: flex;
+    background-color: var(--colour-02);
+}
+
+h1 {
+    padding: 0px;
+
 }
 
 .top-bar {
@@ -45,9 +49,9 @@ header{
 
     justify-content: space-between;
 
-    background-color: var(--colour-02);
+    background-color: #d3d3d3;
 
-    height: 100px;
+    height: 50px;
     
 }
 
@@ -115,8 +119,6 @@ main{
 
 #visualiser { /*test for now*/
     background-color: #2a2a2a;
-
-
 
     position: relative;
     z-index: 1;
