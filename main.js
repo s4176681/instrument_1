@@ -99,7 +99,13 @@ const noteColours = {
     "D5": "lightsalmon",
     "E5": "khaki", // experimental colouring
     "F5": "lightseagreen",
-    "G5": "thistle"
+    "G5": "thistle",
+
+    "C#4": "hotpink",
+    "D#4": "gold",
+    "F#4": "skyblue",
+    "G#4": "orchid",
+    "A#4": "coral"
 }
 
 
@@ -130,6 +136,7 @@ let heldNotes = {}; //key note, the notes actually sounding
 function playNote(e){
     let keyPressed = e.target;
     let note = keyPressed.dataset.note;
+    let notesToPlay = (getMode() === "chord" && chords[note]) ? chords[note] : [note];
 
     if(e.buttons === 1){
         let notesToPlay = getMode() === "chord" ? chords[note] : [note];
@@ -181,11 +188,17 @@ const chords = {
     "A4": ["A4", "C5", "E5"],
     "B4": ["B4", "D5", "F5"],
     "C5": ["C5", "E5", "G5"]
+
+
 };
 
 // LAYOUT + Sliding function
-const allKeys = document.querySelectorAll(".whiteKey");
-const numberOfKeys = allKeys.length;
+//I split the selectors with the implementation of black keys
+const whiteKeys = document.querySelectorAll(".whiteKey");
+const blackKeys = document.querySelectorAll(".blackKey");
+const allKeys = document.querySelectorAll(".whiteKey, .blackKey");
+
+const numberOfKeys = whiteKeys.length;
 const radius = 1300; //change this to adjust how compact the keys are
 
 const centerX = 400; // change these for the placement of the keys
@@ -194,23 +207,45 @@ const centerY = 1520;
 const arcSpan = Math.PI * 0.15; // 180 degrees total spread, change this!!
 const arcStartAngle = -Math.PI / 2 - arcSpan / 2; // centres the arc around, also the direction its facing
 
+//black key implementation
+const blackAfter = {"C#4": 0, "D#4": 1, "F#4": 3, "G#4": 4, "A#4": 5 }; //index of the white keys
+const blackOffset = -80; //radius offset/change, change this
 
-allKeys.forEach(function(keyButton, index){ //claude helped here to better understand how wiring all the buttons together work.
+function angleOfWhite(i){
+    return arcStartAngle + (i / (whiteKeys.length - 1)) * arcSpan;
+}
+
+
+
+function placeKey(button, angle, r){
+    const x = centerX + r * Math.cos(angle);
+    const y = centerY + r * Math.sin(angle);
+    button.style.position = "absolute";
+    button.style.left = x + "px";
+    button.style.top = y + "px";
+    button.style.transform = `rotate(${angle}rad)`
+} //placement job
+
+whiteKeys.forEach(function(k, i){
+    placeKey(k, angleOfWhite(i), radius);
+});
+
+blackKeys.forEach(function(k){
+    const i = blackAfter[k.dataset.note];
+    const angle = (angleOfWhite(i) + angleOfWhite(i + 1)) / 2;
+    placeKey(k, angle, radius + blackOffset);
+    //same x and y, left and top, transform lines as the white keys
+});
+
+
+allKeys.forEach(function(k){ //claude helped here to better understand how wiring all the buttons together work.
     //angular formatting
-    let angle = arcStartAngle + (index / (numberOfKeys - 1)) * arcSpan;
-    let x = centerX + radius * Math.cos(angle); // more trig
-    let y = centerY + radius * Math.sin(angle);
-
-    keyButton.style.position = "absolute";
-    keyButton.style.left = x + "px";
-    keyButton.style.top = y + "px";
-    keyButton.style.transform = `rotate(${angle}rad)`;
-    
+    //listeners go on every key
     // forEach only exists on array like collections. Thats why there was an issue her before.
-    keyButton.addEventListener("mousedown", playNote);
-    keyButton.addEventListener("mouseenter", playNote);
-    keyButton.addEventListener("mouseup", endNote);
-    keyButton.addEventListener("mouseleave", endNote);
+    k.addEventListener("mousedown", playNote);
+    k.addEventListener("mouseenter", playNote);
+    k.addEventListener("mouseup", endNote);
+    k.addEventListener("mouseleave", endNote);
 })
 
 const noteX = {};
@@ -228,6 +263,8 @@ function measureColumns(){
 
 measureColumns();
 window.addEventListener("resize", measureColumns);
+
+
 
 //NOTE BLOCKING
 const noteOrder = Array.from(allKeys).map(function(k){ return k.dataset.note; });

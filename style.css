@@ -102,6 +102,14 @@ main{
     font-size: 1rem;
 }
 
+.blackKey{
+    width: 120px;
+    height: 36px;
+    background: #222;
+    color: white;
+    z-index: 3;
+}
+
 .whiteKey:active {
     background-color: #eee;
 }
