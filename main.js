@@ -17,22 +17,7 @@ const playPauseIcon = playPauseButton.querySelector("img");
 const playIconSrc = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
 const pauseIconSrc = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
 
-playPauseButton.addEventListener("click", function(){
-    isPlaying = !isPlaying;
 
-    if(isPlaying){
-        playStartTIme = performance.now(); //restart the loop from beginning
-        
-        //progress goes 0 to 1
-        playheadY = canvas.height; //starts at bottom ends at top
-
-        playPauseIcon.src = pauseIconSrc;
-        playPauseIcon.alt = "Pause Button";
-    } else {
-        playPauseIcon.src = playIconSrc;
-        playPauseIcon.alt = "Play Button"
-    }
-});
 function updatePlayhead(){
     if(!isPlaying) return;
     let elapsed = performance.now() - playStartTIme;
@@ -454,6 +439,9 @@ function setPlaying(on){
         currentStep = -1; //make step 0 play on the first pass
         playPauseIcon.src = pauseIconSrc;
         playPauseIcon.alt = "Pause Button";
+    } else {
+        playPauseIcon.src = playIconSrc;
+        playPauseIcon.alt = "Play Button";
     }
 }
 
