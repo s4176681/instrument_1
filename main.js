@@ -430,3 +430,52 @@ function drawLayers(){
 }
 
 drawLayers();
+
+
+
+//creating presets in response to the 'dynamic sound track-er'
+//the concept is: The goals is to make a drop down box, by default its 'no preset'. The dropdown will have preset 1, 2, 3, etc. Start with 1 for now. When the preset is 'selected', it 'clears' all playhead blocks, and stamps a set of notes onto the board. Upon using the function, it switches the play button off also. The user can click play afterwards and the dial should run over normally and play a nice rhythm thats already built in for them. 
+const presets = {
+    "1": {
+        "C4": [0],
+        "E4": [3, 14],
+        "G4": [6, 11],
+        "A4": [8]
+    }
+
+   //"2":
+};
+//seeing if play/pause is on
+function setPlaying(on){
+
+    if(on){
+        playStartTIme = performance.now();
+        playheadY = canvas.height;
+        currentStep = -1; //make step 0 play on the first pass
+        playPauseIcon.src = pauseIconSrc;
+        playPauseIcon.alt = "Pause Button";
+    }
+}
+
+playPauseButton.addEventListener("click", function(){
+    setPlaying(!isPlaying); //not playing
+})
+//loading the preset in
+function loadPreset(name){
+    const preset = presets[name];
+    if(!preset) return; //none has no entry, so nothing happens
+
+    setPlaying(false); //switch play off here
+    grid = {};
+
+    for(let note in preset){
+        grid[note] = {};
+        preset[note].forEach(function(step){
+            grid[note][step] = [note]; //same shape playnote creates
+        });
+    }
+}
+
+document.getElementById("preset-select").addEventListener("change", function(e){
+    loadPreset(e.target.value);
+});
