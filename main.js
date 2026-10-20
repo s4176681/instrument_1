@@ -272,6 +272,24 @@ function triggerSteps(){
     }
 }
 
+//drawing a grid
+function drawGrid(){
+    for(let i = 0; i <= stepsPerLoop; i++){
+        const y = canvas.height - i * stepHeight;
+        const isBeat = i % 4 === 0; //every 4th line equals to one beat 4/4 bar
+
+        ctx.globalAlpha = isBeat ? 0.35 : 0.12;
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, y - 0.5, canvas.width, 1);
+    }
+
+    for(let note in noteX){
+        ctx.globalAlpha = 0.12;
+        ctx.fillRect(noteX[note] - 0.5, 0, 1, canvas.height);
+    }
+    ctx.globalAlpha = 1;
+}
+
 
 
 //ANIMATING A WIPE
@@ -328,6 +346,8 @@ function drawLayers(){
     });
 
     ctx.globalAlpha = 1 //reset
+
+    drawGrid();
 
     updatePlayhead();
     drawPlayhead(); //calling them  
