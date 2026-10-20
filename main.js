@@ -209,7 +209,7 @@ const arcStartAngle = -Math.PI / 2 - arcSpan / 2; // centres the arc around, als
 
 //black key implementation
 const blackAfter = {"C#4": 0, "D#4": 1, "F#4": 3, "G#4": 4, "A#4": 5 }; //index of the white keys
-const blackOffset = -80; //radius offset/change, change this
+const blackOffset = 20; //radius offset/change, change this
 
 function angleOfWhite(i){
     return arcStartAngle + (i / (whiteKeys.length - 1)) * arcSpan;

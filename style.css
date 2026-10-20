@@ -103,8 +103,8 @@ main{
 }
 
 .blackKey{
-    width: 120px;
-    height: 36px;
+    width: 180px;
+    height: 40px;
     background: #222;
     color: white;
     z-index: 3;
