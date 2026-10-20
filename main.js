@@ -293,6 +293,34 @@ function drawBlocks(){
     }
 }
 
+//CLEAR BUTTONS
+const rowsPerButton = 4; //4 = one button per beat, 1 per step
+const clearRows = document.getElementById("clearRows");
+
+for(let first = 0; first < stepsPerLoop; first += rowsPerButton){
+    const btn = document.createElement("button");
+    btn.className = "clear-btn";
+    btn.textContent = "✕"
+    btn.title = "Clear this row"
+
+    btn.addEventListener("click", function(){
+        clearSteps(first, first + rowsPerButton - 1);
+    });
+
+    clearRows.appendChild(btn);
+}
+
+//delete playheadblocks
+function clearSteps(from, to){ //claude help explain and demonstrate how to use these complex functions so that I could achieve my percieved concept model.
+    for(let note in grid){
+        for (let s = from; s <= to; s++){
+            delete grid[note][s];
+        }
+    }
+}
+
+
+
 //cross pixel checking -> block checking
 function triggerSteps(){
     if(!isPlaying) return;
