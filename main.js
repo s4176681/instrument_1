@@ -231,7 +231,7 @@ allKeys.forEach(function(k){ //claude helped here to better understand how wirin
     k.addEventListener("mouseenter", playNote);
     k.addEventListener("mouseup", endNote);
     k.addEventListener("mouseleave", endNote);
-})
+});
 
 const noteX = {};
 
@@ -432,6 +432,7 @@ const presets = {
 };
 //seeing if play/pause is on
 function setPlaying(on){
+    isPlaying = on;
 
     if(on){
         playStartTIme = performance.now();
@@ -447,7 +448,7 @@ function setPlaying(on){
 
 playPauseButton.addEventListener("click", function(){
     setPlaying(!isPlaying); //not playing
-})
+});
 //loading the preset in
 function loadPreset(name){
     const preset = presets[name];
