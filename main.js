@@ -10,7 +10,7 @@ let isPlaying = false;
 let playStartTIme = 0;
 let playheadY = 0;
 let currentProgress = 0; //sets the default playhead to 0
-const loopDuration = 4000; //ms for one full pass, in short - duration of the slider
+const loopDuration = 5000; //ms for one full pass, in short - duration of the slider
 let currentStep = -1;
 const playPauseButton = document.querySelector(".playPauseButton");
 const playPauseIcon = playPauseButton.querySelector("img");
@@ -99,9 +99,21 @@ const noteColours = {
 //TONE + usage
 // create instrument and connect to audio
 // html -> js -> open modal -> ok -> modal closes -> audio init
+const filter = new Tone.Filter(1400, "lowpass"); //rounds off the harsh highs
+const limiter = new Tone.Limiter(-3); //stops the total from clipping
 const synth = new Tone.PolySynth(Tone.Synth, { //claude helped me here to adjust the quality of the notes because I didn't understand how to put it into code.
-
+    osciallator: { type: "sine" },
+    envelope: {
+        attack: 0.06, //soft start quick to respond
+        decay: 0.2,
+        sustain: 0.35,
+        release: 0.9 //fading away, pedal on the piano
+    }
 });
+
+synth.maxPolyphony = 24; //caps how many voices can stack
+synth.volume.value = -16; //headroom for chords and faster swipes
+synth.chain(filter, limiter, Tone.Destination);
 
 function toneInit(){
     Tone.start().then(function(){
@@ -479,6 +491,18 @@ function setPlaying(on){
 playPauseButton.addEventListener("click", function(){
     setPlaying(!isPlaying); //not playing
 });
+
+//helper
+//find which key column a pitch belongs in
+function columnFor(pitch){
+    if(noteX[pitch] !== undefined) return pitch;
+
+    const name = pitch.slice(0, -1);
+    for(let col in noteX){
+        if(col.slice (0, -1) === name) return col;
+    }
+    return null;
+}
 //loading the preset in
 function loadPreset(name){
     const preset = presets[name];
@@ -487,12 +511,16 @@ function loadPreset(name){
     setPlaying(false); //switch play off here
     grid = {};
 
-    for(let note in preset){
-        grid[note] = {};
-        preset[note].forEach(function(step){
-            grid[note][step] = [note]; //same shape playnote creates
+    for(let pitch in preset){
+        const col = columnFor(pitch);
+        if(!col) continue; //skip anything that has no column
+
+        if(!grid[col]) grid[col] = {};
+        preset[pitch].forEach(function(step){
+            grid[col][step] = [pitch]; //column decides where it draws
         });
     }
+
 }
 
 document.getElementById("preset-select").addEventListener("change", function(e){
