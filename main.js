@@ -216,8 +216,10 @@ const allKeys = document.querySelectorAll(".whiteKey, .blackKey");
 const numberOfKeys = whiteKeys.length;
 const radius = 1320; //change this to adjust how compact the keys are
 
-const centerX = 400; // change these for the placement of the keys
-const centerY = 1500;
+const keyGap = 20; //space ebtween the canvas and the keys
+
+const centerX = canvas.width / 2 - 90;
+const centerY = canvas.height + keyGap + 90 - 25 + radius;
 
 const arcSpan = Math.PI * 0.15; // 180 degrees total spread, change this!!
 const arcStartAngle = -Math.PI / 2 - arcSpan / 2; // centres the arc around, also the direction its facing
@@ -267,7 +269,7 @@ const noteX = {};
 
 //CSS assisting
 const stage = document.querySelector(".instrument-area");
-const designW = 1100, designH = 700; // keep in sync with CSS
+const designW = 1600, designH = 700; // keep in sync with CSS
 
 function fitStage(){
     const main = document.querySelector("main");

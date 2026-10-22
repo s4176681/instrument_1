@@ -1,22 +1,7 @@
 /*got a font of google fonts*/
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
-/*Large: 1200-1600px is the default styling */
-@media (width > 1600px) {
-    .top-bar { gap: 0.75rem 3rem; }
-    .top-bar label { font-size: 0.85rem}
-}
 
-/*Expanded*/
-@media (width < 1200px) {
-    .top-bar { gap: 0.75rem 1.25rem; padding: 0.5rem 1rem; }
-}
-
-/*Medium under 840px*/
-@media(width < 840px) {
-    .top-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem 1rem}
-    .header-bar h1 { font-size: 1.1rem; }
-}
 
 
 /*custom variables*/
@@ -102,12 +87,23 @@ main{
     font-size: 0.9rem;
 }
 
+.canvas-wrap {
+    position: absolute;
+    left: 70px;
+    top: 20px;
+}
+
+.keysRow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    z-index: 2;
+}
 
 input[type="range"] { accent-color: #6a2c91; } 
 :focus-visible { outline: 3px solid #4753ff; outline-offset: 2px }
-
-
-.canvas-wrap { position: relative; }
 
 #clearRows {
     position: absolute;
@@ -146,12 +142,6 @@ input[type="range"] { accent-color: #6a2c91; }
     display: block;
 }
 
-.canvas-wrap {
-    position: relative;
-
-    top: -60px;
-}
-
 .whiteKey {
     width: 180px;
     height: 50px;
@@ -175,15 +165,6 @@ input[type="range"] { accent-color: #6a2c91; }
     background-color: #eee;
 }
 
-.keysRow {
-    display: flex;
-    flex-direction: column;
-    gap: 2px; 
-    position: relative;
-    z-index: 2;
-    flex: 0 0 auto;
-}
-
 .SLIDERS {
     /**/
     display: flex;
@@ -197,7 +178,7 @@ input[type="range"] { accent-color: #6a2c91; }
     position: absolute;
     top: 0;
     left: 50%;
-    width: 1100px;
+    width: 1600px;
     height: 700px;
     transform-origin: top center;
 }
@@ -208,3 +189,19 @@ dialog {
 }
 
 
+/*Large: 1200-1600px is the default styling */
+@media (width > 1600px) {
+    .top-bar { gap: 0.75rem 3rem; }
+    .top-bar label { font-size: 0.85rem}
+}
+
+/*Expanded*/
+@media (width < 1200px) {
+    .top-bar { gap: 0.75rem 1.25rem; padding: 0.5rem 1rem; }
+}
+
+/*Medium under 840px*/
+@media(width < 840px) {
+    .top-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem 1rem}
+    .header-bar h1 { font-size: 1.1rem; }
+}
