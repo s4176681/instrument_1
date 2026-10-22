@@ -10,7 +10,7 @@ let isPlaying = false;
 let playStartTIme = 0;
 let playheadY = 0;
 let currentProgress = 0; //sets the default playhead to 0
-const loopDuration = 6000; //ms for one full pass, in short - duration of the slider
+let loopDuration = 6000; //ms for one full pass, in short - duration of the slider
 
 //loop duration control
 document.getElementById("speed-slider").addEventListener("input", function(e){
@@ -108,7 +108,7 @@ const noteColours = {
 const filter = new Tone.Filter(1400, "lowpass"); //rounds off the harsh highs
 const limiter = new Tone.Limiter(-3); //stops the total from clipping
 const synth = new Tone.PolySynth(Tone.Synth, { //claude helped me here to adjust the quality of the notes because I didn't understand how to put it into code.
-    osciallator: { type: "sine" },
+    oscillator: { type: "sine" },
     envelope: {
         attack: 0.06, //soft start quick to respond
         decay: 0.2,
@@ -126,7 +126,6 @@ function toneInit(){
         console.log("audio is ready");
     }); 
     // connect synth
-    synth.connect(Tone.Destination);
 }
 
 //octave control
