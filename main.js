@@ -10,7 +10,13 @@ let isPlaying = false;
 let playStartTIme = 0;
 let playheadY = 0;
 let currentProgress = 0; //sets the default playhead to 0
-const loopDuration = 5000; //ms for one full pass, in short - duration of the slider
+const loopDuration = 6000; //ms for one full pass, in short - duration of the slider
+
+//loop duration control
+document.getElementById("speed-slider").addEventListener("input", function(e){
+    loopDuration = 12000 - Number(e.target.value); //flip is so right is faster, left is slower
+});
+
 let currentStep = -1;
 const playPauseButton = document.querySelector(".playPauseButton");
 const playPauseIcon = playPauseButton.querySelector("img");
@@ -212,14 +218,14 @@ const numberOfKeys = whiteKeys.length;
 const radius = 1320; //change this to adjust how compact the keys are
 
 const centerX = 400; // change these for the placement of the keys
-const centerY = 1520;
+const centerY = 1500;
 
 const arcSpan = Math.PI * 0.15; // 180 degrees total spread, change this!!
 const arcStartAngle = -Math.PI / 2 - arcSpan / 2; // centres the arc around, also the direction its facing
 
 //black key implementation
 const blackAfter = {"C#4": 0, "D#4": 1, "F#4": 3, "G#4": 4, "A#4": 5 }; //index of the white keys
-const blackOffset = 20; //radius offset/change, change this
+const blackOffset = -20; //radius offset/change, change this
 
 function angleOfWhite(i){
     return arcStartAngle + (i / (whiteKeys.length - 1)) * arcSpan;
@@ -470,6 +476,23 @@ const presets = {
         "A#4": [8,10], //3
         "G#4": [9], //2
         "G4": [11] //1
+    },
+
+    "3": {
+        "C3": [0],        // low root
+        "E4": [2, 14],
+        "G4": [4, 12],
+        "B4": [6],
+        "A3": [8],        // low A
+        "C5": [10]
+    },
+
+    "4": {
+        "F#4": [0, 5, 8],
+        "A#4": [0, 8],
+        "G#4": [2, 10],
+        "D#4": [3, 11],
+        "C#4": [13]
     }
 };
 //seeing if play/pause is on
