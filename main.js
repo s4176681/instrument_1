@@ -184,7 +184,7 @@ const blackKeys = document.querySelectorAll(".blackKey");
 const allKeys = document.querySelectorAll(".whiteKey, .blackKey");
 
 const numberOfKeys = whiteKeys.length;
-const radius = 1300; //change this to adjust how compact the keys are
+const radius = 1320; //change this to adjust how compact the keys are
 
 const centerX = 400; // change these for the placement of the keys
 const centerY = 1520;
