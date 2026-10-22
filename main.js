@@ -102,10 +102,10 @@ const noteColours = {
 const synth = new Tone.PolySynth(Tone.Synth, { //claude helped me here to adjust the quality of the notes because I didn't understand how to put it into code.
     oscillator: { type: "sine"},
     envelope: {
-        attack: 0.1, //fade in instead of a click
+        attack: 0.06, //fade in instead of a click
         decay: 0.1,
         sustain: 0.4,
-        release: 0.2 //fade away notes, like the pedal on a piano
+        release: 0.1 //fade away notes, like the pedal on a piano
     }
 });
 
@@ -477,4 +477,16 @@ function loadPreset(name){
 
 document.getElementById("preset-select").addEventListener("change", function(e){
     loadPreset(e.target.value);
+});
+
+
+//volume slider
+const volumeSlider = document.getElementById("volume-slider");
+
+volumeSlider.addEventListener("input", function(){
+    const v = Number(volumeSlider.value) / 100; //0 to 1
+    Tone.Destination.mute = (v === 0);
+    if(v > 0){
+        Tone.Destination.volume.value = Tone.gainToDb(v);
+    }
 });
