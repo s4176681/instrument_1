@@ -47,9 +47,22 @@ body {
     text-align: center;
 }
 
-h1 {
-    padding: 0px;
+.header-bar h1 { /*tightens up the top header*/
+    margin: 0;
+    padding: 0;
+    font-size: clamp(1.2rem, 2.4vw, 1.9rem); /*scale smoothly between screens*/
+    font-weight: 600; /*semi bold*/
+    letter-spacing: 0.04rem;
+    line-height: 1.2;
+    color: #1a1a1a;
+}
 
+.header-bar .tagline {
+    margin: 0.15rem 0 0;
+    font-size: clamp(0.7rem, 1.1vw, 0.85rem);
+    letter-spacing: 0.08rem;
+    text-transform: uppercase;
+    color: #555;
 }
 
 .top-bar {
