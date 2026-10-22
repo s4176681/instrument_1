@@ -100,13 +100,7 @@ const noteColours = {
 // create instrument and connect to audio
 // html -> js -> open modal -> ok -> modal closes -> audio init
 const synth = new Tone.PolySynth(Tone.Synth, { //claude helped me here to adjust the quality of the notes because I didn't understand how to put it into code.
-    oscillator: { type: "sine"},
-    envelope: {
-        attack: 0.06, //fade in instead of a click
-        decay: 0.1,
-        sustain: 0.4,
-        release: 0.1 //fade away notes, like the pedal on a piano
-    }
+
 });
 
 function toneInit(){
@@ -115,6 +109,15 @@ function toneInit(){
     }); 
     // connect synth
     synth.connect(Tone.Destination);
+}
+
+//octave control
+function octaveOf(name){ return Number(name.slice(-1)); } //C#4 into 4
+function transposeNote(name, shift){ return name.slice(0, -1) + (octaveOf(name) + shift); } //C#4 turn into C#5
+// claude helped me to understand and create a concept on how to change octaves
+function getOctaveShift(){
+    const select = document.getElementById("octave-select");
+    return select ? Number(select.value) : 0;
 }
 
 // action
@@ -126,18 +129,20 @@ function getMode(){
 
 let heldNotes = {}; //key note, the notes actually sounding
 
-function playNote(e){
+function playNote(e){ //updating to suit the octave change
     let keyPressed = e.target;
     let note = keyPressed.dataset.note;
-    let notesToPlay = (getMode() === "chord" && chords[note]) ? chords[note] : [note];
 
     if(e.buttons === 1){
-        let notesToPlay = getMode() === "chord" ? chords[note] : [note];
+        const shift = getOctaveShift();
+        const baseNotes = (getMode() === "chord" && chords[note]) ? chords[note] : [note];
+        const notesToPlay = baseNotes.map(function(n){ return transposeNote(n, shift); });
 
         synth.triggerAttack(notesToPlay);
         heldNotes[note] = notesToPlay;
 
-        createLayer(note, notesToPlay.map(function(n){ return noteColours[n]; }));
+        //colour come from the untransposed names
+        createLayer(note, baseNotes.map(function(n){ return noteColours[n]; }));
 
         if(isPlaying){
                 let step = Math.round(currentProgress * stepsPerLoop) % stepsPerLoop;
@@ -281,7 +286,18 @@ function drawBlocks(){
             const x = noteX[note] - 15;
             const y = canvas.height - (Number(step) + 1) * stepHeight;
 
+            ctx.fillStyle = "white";
             ctx.fillRect(x, y, 30, stepHeight - 2);
+
+            //compare the stored pitch with its column's own octave
+            const shift = octaveOf(grid[note][step][0]) - octaveOf(note);
+            if(shift !== 0){
+                ctx.fillStyle = "black";
+                ctx.font = "12px 'Roboto Mono', monospace";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(shift > 0 ? "▲" : "▼", x + 15, y + (stepHeight - 2) / 2);
+            }
         }
     }
 }
@@ -490,3 +506,6 @@ volumeSlider.addEventListener("input", function(){
         Tone.Destination.volume.value = Tone.gainToDb(v);
     }
 });
+
+
+

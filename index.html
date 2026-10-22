@@ -31,6 +31,14 @@
 
     <header class="top-bar">
         
+        <div class="control-group">
+            <label for="preset-select">Presets</label>
+            <select id="preset-select">
+                <option value="none">No Preset</option>
+                <option value="1">Preset 1</option> <!--option value links to JS-->
+                <option value="2">Preset 2</option>
+            </select>
+        </div>
 
         <div class="playPauseButton">
             <button>
@@ -44,12 +52,17 @@
         </div>
 
         <div class="control-group">
-            <label for="preset-select">Presets</label>
-            <select id="preset-select">
-                <option value="none">No Preset</option>
-                <option value="1">Preset 1</option> <!--option value links to JS-->
-                <option value="2">Preset 2</option>
+            <label for="octave-select">Octaves</label>
+            <select id="octave-select">
+                <option value="-1">-1</option>
+                <option value="0">Normal</option>
+                <option value="+1">+1</option>
             </select>
+        </div>
+
+        <div class="control-group">
+            <label for="volume-slider">Master Volume</label>
+            <input type="range" id="volume-slider" min="0" max="100" value="50">
         </div>
 
         <div class="control-group">
