@@ -1,6 +1,24 @@
 /*got a font of google fonts*/
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
+/*Large: 1200-1600px is the default styling */
+@media (width > 1600px) {
+    .top-bar { gap: 0.75rem 3rem; }
+    .top-bar label { font-size: 0.85rem}
+}
+
+/*Expanded*/
+@media (width < 1200px) {
+    .top-bar { gap: 0.75rem 1.25rem; padding: 0.5rem 1rem; }
+}
+
+/*Medium under 840px*/
+@media(width < 840px) {
+    .top-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem 1rem}
+    .header-bar h1 { font-size: 1.1rem; }
+}
+
+
 /*custom variables*/
 :root {
     --colour-01: black;
@@ -21,7 +39,7 @@ html, body {
 body {
     font-family: "Roboto Mono";
     background-color: #2a2a2a;
-    color: #57054c;
+
     padding: 10px;
 
     inset: 0; /*pins all edges to the viewport.*/
@@ -45,47 +63,49 @@ h1 {
 
 .top-bar {
     display: flex;
-    align-items: center;
-
-    justify-content: space-between;
-
-    background-color: #d3d3d3;
-
-    height: 50px;
-    
-}
-
-.divider {
-    width: 1px;
-    background-color: var(--colour-04);
-    align-self: stretch; /*same height as others the div is in*/
-
-}
-
-main{
-    /*
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /*Keeps these centred.*/  
-    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
     justify-content: center;
-    align-items: center;
-    flex: 1; /*stacking items*/
+    gap: 0.75rem 2rem;
+    height: auto;
+    padding: 0.75rem 1.5rem;
+    background: #e9e9ee;
+    color: #1a1a1a;
 }
 
+/*adaptive/responsive design*/
+main{
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+}
+
+.control-group,
 .playPauseButton {
-    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    padding: 0;
 }
 
-#test-button {
-    /*not in function*/
-    
-    color: rgb(44, 189, 12);
-    border-radius: 6px;
-    font-weight: 800;
-    border-color: rgba(47, 255, 0, 0.729);
-
+.top-bar label {
+    color: #1a1a1a;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
 }
+
+.top-bar select,
+.top-bar button {
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+
+input[type="range"] { accent-color: #6a2c91; } 
+:focus-visible { outline: 3px solid #4753ff; outline-offset: 2px }
+
 
 .canvas-wrap { position: relative; }
 
@@ -174,10 +194,12 @@ main{
 }
 
 .instrument-area {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1100px;
+    height: 700px;
+    transform-origin: top center;
 }
 
 dialog {

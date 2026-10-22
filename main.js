@@ -265,6 +265,20 @@ allKeys.forEach(function(k){ //claude helped here to better understand how wirin
 
 const noteX = {};
 
+//CSS assisting
+const stage = document.querySelector(".instrument-area");
+const designW = 1100, designH = 700; // keep in sync with CSS
+
+function fitStage(){
+    const main = document.querySelector("main");
+    const s = Math.min(main.clientWidth / designW, main.clientHeight / designH, 1.5);
+    stage.style.transform = `translateX(-50%) scale(${s})`;
+    measureColumns();
+}
+
+fitStage();
+window.addEventListener("resize", fitStage);
+
 function measureColumns(){
     const canvasRect = canvas.getBoundingClientRect();
     const scale = canvas.width / canvasRect.width; //CSS may stretch the canvas, scaling towards that for future testing
