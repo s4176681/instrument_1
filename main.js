@@ -99,7 +99,15 @@ const noteColours = {
 //TONE + usage
 // create instrument and connect to audio
 // html -> js -> open modal -> ok -> modal closes -> audio init
-const synth = new Tone.PolySynth();
+const synth = new Tone.PolySynth(Tone.Synth, { //claude helped me here to adjust the quality of the notes because I didn't understand how to put it into code.
+    oscillator: { type: "sine"},
+    envelope: {
+        attack: 0.1, //fade in instead of a click
+        decay: 0.1,
+        sustain: 0.4,
+        release: 0.2 //fade away notes, like the pedal on a piano
+    }
+});
 
 function toneInit(){
     Tone.start().then(function(){
@@ -426,9 +434,11 @@ const presets = {
         "E4": [3, 14],
         "G4": [6, 11],
         "A4": [8]
-    }
+    },
 
-   //"2":
+    "2": {
+        "C4": [0]
+    }
 };
 //seeing if play/pause is on
 function setPlaying(on){
