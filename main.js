@@ -7,7 +7,7 @@
 
 //PLAYHEAD
 let isPlaying = false;
-let playStartTIme = 0;
+
 let playheadY = 0;
 let currentProgress = 0; //sets the default playhead to 0
 let loopDuration = 6000; //ms for one full pass, in short - duration of the slider
@@ -15,6 +15,7 @@ let loopDuration = 6000; //ms for one full pass, in short - duration of the slid
 //loop duration control
 document.getElementById("speed-slider").addEventListener("input", function(e){
     loopDuration = 12000 - Number(e.target.value); //flip is so right is faster, left is slower
+    Tone.Transport.bpm.value = 240000 / loopDuration;
 });
 
 let currentStep = -1;
@@ -26,8 +27,8 @@ const pauseIconSrc = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
 
 function updatePlayhead(){
     if(!isPlaying) return;
-    let elapsed = performance.now() - playStartTIme;
-    currentProgress = (elapsed % loopDuration) / loopDuration; //0 to 1, wrapping
+    const loopTicks = Tone.Transport.PPQ * 4; //4 beats per loop
+    currentProgress = (Tone.Transport.ticks % loopTicks) / loopTicks; //0 to 1, wrapping
     playheadY = canvas.height - currentProgress * canvas.height; //within the visualiser, from end to end, righ to left logic.
 }
 function drawPlayhead(){
@@ -462,7 +463,6 @@ function drawLayers(){
     drawPlayhead(); //calling them  
 
     drawBlocks();
-    triggerSteps(); //was checkBlockCrossing
 
     //drop layers that have fully faded
     layers = layers.filter(function(layer){
@@ -515,11 +515,13 @@ const presets = {
 //seeing if play/pause is on
 function setPlaying(on){
     isPlaying = on;
+    Tone.Transport.stop(); //always rewinds to the start
+    synth.releaseAll(); //no notes left hanging around
 
     if(on){
-        playStartTIme = performance.now();
-        playheadY = canvas.height;
+        transportStep = 0;
         currentStep = -1; //make step 0 play on the first pass
+        Tone.Transport.start();
         playPauseIcon.src = pauseIconSrc;
         playPauseIcon.alt = "Pause Button";
     } else {
