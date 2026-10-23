@@ -364,20 +364,22 @@ function clearSteps(from, to){ //claude help explain and demonstrate how to use 
 
 
 //cross pixel checking -> block checking
-function triggerSteps(){
-    if(!isPlaying) return;
+//making the sound play even tabbed out
+let transportStep = 0;
 
-    const step = Math.floor(currentProgress * stepsPerLoop);
+Tone.Transport.bpm.value = 240000 / loopDuration; //make one 16th note equal to steps
 
-    if(step !== currentStep){ //if not current step...
-        currentStep = step;
-        for(let note in grid){
-            if(grid[note][step]){
-                synth.triggerAttackRelease(grid[note][step], "8n"); //if crossed play note
-            }
+Tone.Transport.scheduleRepeat(function(time){
+    const step = transportStep % stepsPerLoop;
+    currentStep = step;
+
+    for(let note in grid){
+        if(grid[note][step]){
+            synth.triggerAttackRelease(grid[note][step], "8n", time);
         }
     }
-}
+    transportStep++;
+}, "16n");
 
 //drawing a grid
 function drawGrid(){

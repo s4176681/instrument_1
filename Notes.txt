@@ -14,3 +14,19 @@ playPauseButton.addEventListener("click", function(){
         playPauseIcon.alt = "Play Button"
     }
 });
+
+
+function triggerSteps(){
+    if(!isPlaying) return;
+
+    const step = Math.floor(currentProgress * stepsPerLoop);
+
+    if(step !== currentStep){ //if not current step...
+        currentStep = step;
+        for(let note in grid){
+            if(grid[note][step]){
+                synth.triggerAttackRelease(grid[note][step], "8n"); //if crossed play note
+            }
+        }
+    }
+}
