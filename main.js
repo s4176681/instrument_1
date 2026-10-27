@@ -109,7 +109,7 @@ const noteColours = {
 const filter = new Tone.Filter(1400, "lowpass"); //rounds off the harsh highs
 const limiter = new Tone.Limiter(-3); //stops the total from clipping
 const synth = new Tone.PolySynth(Tone.Synth, { //claude helped me here to adjust the quality of the notes because I didn't understand how to put it into code.
-    oscillator: { type: "custom", partials: [1, 0.35, 0.15, 0.07] }, //non-headphone compatability
+    oscillator: { type: "custom", partials: [1, 0.2, 0.08, 0.03] }, //non-headphone compatability
     envelope: {
         attack: 0.06, //soft start quick to respond
         decay: 0.2,
@@ -121,6 +121,7 @@ const synth = new Tone.PolySynth(Tone.Synth, { //claude helped me here to adjust
 synth.maxPolyphony = 24; //caps how many voices can stack
 synth.volume.value = -16; //headroom for chords and faster swipes
 const lowCut = new Tone.Filter(70, "highpass");
+const Filter = new Tone.Filter(900, "lowpass", -24); //adjusting the sound of the keys to match the soft and calming study vibe.
 synth.chain(lowCut, filter, limiter, Tone.Destination);
 
 function toneInit(){
