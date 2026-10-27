@@ -109,7 +109,7 @@ const noteColours = {
 const filter = new Tone.Filter(1400, "lowpass"); //rounds off the harsh highs
 const limiter = new Tone.Limiter(-3); //stops the total from clipping
 const synth = new Tone.PolySynth(Tone.Synth, { //claude helped me here to adjust the quality of the notes because I didn't understand how to put it into code.
-    oscillator: { type: "sine" },
+    oscillator: { type: "custom", partials: [1, 0.35, 0.15, 0.07] }, //non-headphone compatability
     envelope: {
         attack: 0.06, //soft start quick to respond
         decay: 0.2,
@@ -120,7 +120,8 @@ const synth = new Tone.PolySynth(Tone.Synth, { //claude helped me here to adjust
 
 synth.maxPolyphony = 24; //caps how many voices can stack
 synth.volume.value = -16; //headroom for chords and faster swipes
-synth.chain(filter, limiter, Tone.Destination);
+const lowCut = new Tone.Filter(70, "highpass");
+synth.chain(lowCut, filter, limiter, Tone.Destination);
 
 function toneInit(){
     Tone.start().then(function(){
